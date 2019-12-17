@@ -19,6 +19,8 @@ public class BrightnessAutoAdjusterDemo
 		// Mri stack
 		BdvHandle bdvHandle = BDVSingleton.getInstance();
 
+
+
 		final Source source = getMriSource();
 		addSource( bdvHandle, source );
 

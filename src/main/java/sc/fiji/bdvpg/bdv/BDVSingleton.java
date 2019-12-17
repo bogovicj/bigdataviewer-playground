@@ -22,6 +22,8 @@ public class BDVSingleton
 
 		if (bdvHandle == null) {
 			BdvStackSource stackSource = BdvFunctions.show(source, "empty");
+			BdvFunctions.show(source, "empty").getSources().get( 0 );
+
 			bdvHandle = stackSource.getBdvHandle();
 		} else {
 			BdvFunctions.show(source, "empty", BdvOptions.options().addTo( bdvHandle ));
