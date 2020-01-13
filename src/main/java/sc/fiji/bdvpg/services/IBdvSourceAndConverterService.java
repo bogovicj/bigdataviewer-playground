@@ -45,7 +45,7 @@ public interface IBdvSourceAndConverterService {
     /**
      * @return list of all registered sources
      */
-    List<SourceAndConverter> getSources();
+    List<SourceAndConverter> getSourceAndConverters();
 
     /**
      * Return sources assigned to a SpimDataObject

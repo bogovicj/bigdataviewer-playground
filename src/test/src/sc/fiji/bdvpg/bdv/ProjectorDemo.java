@@ -5,7 +5,7 @@ import mpicbg.spim.data.generic.AbstractSpimData;
 import sc.fiji.bdvpg.bdv.navigate.ViewerTransformAdjuster;
 import sc.fiji.bdvpg.sourceandconverter.display.BrightnessAutoAdjuster;
 import sc.fiji.bdvpg.services.BdvService;
-import sc.fiji.bdvpg.spimdata.importer.SpimDataImporterXML;
+import sc.fiji.bdvpg.spimdata.importer.SpimDataOpener;
 
 /**
  * Demonstrates average projection of two sources.
@@ -23,7 +23,7 @@ public class ProjectorDemo
 		BdvHandle bdvHandle = BdvService.getSourceDisplayService().getActiveBdv();
 
 		// Import SpimData object
-		SpimDataImporterXML sdix = new SpimDataImporterXML("src/test/resources/mri-stack.xml");
+		SpimDataOpener sdix = new SpimDataOpener("src/test/resources/mri-stack.xml");
 
 		AbstractSpimData asd = sdix.get();
 
@@ -39,7 +39,7 @@ public class ProjectorDemo
 		});
 
 		// Import SpimData object
-		sdix = new SpimDataImporterXML("src/test/resources/mri-stack-shiftedX.xml");
+		sdix = new SpimDataOpener("src/test/resources/mri-stack-shiftedX.xml");
 
 		asd = sdix.get();
 

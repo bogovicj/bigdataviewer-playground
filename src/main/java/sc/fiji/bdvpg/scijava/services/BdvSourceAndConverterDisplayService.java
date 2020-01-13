@@ -2,9 +2,7 @@ package sc.fiji.bdvpg.scijava.services;
 
 import bdv.tools.brightness.ConverterSetup;
 import bdv.tools.brightness.SetupAssignments;
-import bdv.util.BdvHandle;
-import bdv.util.BdvStackSource;
-import bdv.util.LUTConverterSetup;
+import bdv.util.*;
 import bdv.viewer.BigWarpConverterSetupWrapper;
 import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
@@ -29,8 +27,9 @@ import org.scijava.script.ScriptService;
 import org.scijava.service.AbstractService;
 import org.scijava.service.SciJavaService;
 import org.scijava.service.Service;
+import sc.fiji.bdvpg.bdv.BdvCreator;
+import sc.fiji.bdvpg.bdv.projector.AccumulateAverageProjectorARGB;
 import sc.fiji.bdvpg.scijava.command.bdv.BdvWindowCreatorCommand;
-import bdv.util.ARGBColorConverterSetup;
 import sc.fiji.bdvpg.services.BdvService;
 import sc.fiji.bdvpg.services.IBdvSourceAndConverterDisplayService;
 import sc.fiji.bdvpg.sourceandconverter.SourceAndConverterUtils;
@@ -110,6 +109,21 @@ public class BdvSourceAndConverterDisplayService extends AbstractService impleme
         if ((bdvhs == null)||(bdvhs.size()==0)) {
             try
             {
+//                BdvOptions opts = BdvOptions.options().frameTitle("BigDataViewer");
+//                switch (projector) {
+//                    case "Sum Projector":
+//                        // Default projector
+//                        break;
+//                    case "Average Projector":
+//                        opts = opts.accumulateProjectorFactory( AccumulateAverageProjectorARGB.factory);
+//                        break;
+//                    default:
+//                }
+//
+//                BdvCreator creator = new BdvCreator(opts);
+//                creator.run();
+//                return creator.get();
+                // TODO: Can we get rid of below call?
                 return (BdvHandle)
                         cs.run(BdvWindowCreatorCommand.class,
                                 true,

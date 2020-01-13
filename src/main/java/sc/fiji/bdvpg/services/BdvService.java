@@ -17,7 +17,7 @@ public class BdvService {
         return iss;
     }
 
-    public static IBdvSourceAndConverterDisplayService getSourceDisplayService() {
+    public static IBdvSourceAndConverterDisplayService  getSourceDisplayService() {
         return isds;
     }
 

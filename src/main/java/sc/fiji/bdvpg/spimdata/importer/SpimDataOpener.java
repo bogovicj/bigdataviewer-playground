@@ -10,23 +10,23 @@ import sc.fiji.bdvpg.services.BdvService;
 import java.io.File;
 import java.util.function.Function;
 
-public class SpimDataImporterXML implements Runnable, Function<File, AbstractSpimData> {
+public class SpimDataOpener implements Runnable, Function<File, AbstractSpimData> {
 
     AbstractSpimData spimData;
 
     File f;
 
-    public SpimDataImporterXML(File f) {
+    public SpimDataOpener( File f) {
         this.f = f;
     }
 
-    public SpimDataImporterXML(String filePath) {
+    public SpimDataOpener( String filePath) {
         this.f = new File(filePath);
     }
 
     @Override
     public void run() {
-        // Unnecessary
+        apply( f ); // open and register with BdvService
     }
 
     public AbstractSpimData get() {

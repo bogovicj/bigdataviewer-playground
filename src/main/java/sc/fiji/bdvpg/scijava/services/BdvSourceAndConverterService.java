@@ -175,7 +175,7 @@ public class BdvSourceAndConverterService extends AbstractService implements Sci
     }
 
     @Override
-    public List<SourceAndConverter> getSources() {
+    public List<SourceAndConverter> getSourceAndConverters() {
         return objectService.getObjects(SourceAndConverter.class);
     }
 

@@ -13,6 +13,9 @@ import sc.fiji.bdvpg.scijava.ScijavaBdvDefaults;
     label = "Creates an empty Bdv window")
 public class BdvWindowCreatorCommand implements Command {
 
+    public static final String SUM_PROJECTOR = "Sum Projector";
+    public static final String AVERAGE_PROJECTOR = "Average Projector";
+
     @Parameter(label = "Create a 2D Bdv window")
     public boolean is2D = false;
 
@@ -22,7 +25,7 @@ public class BdvWindowCreatorCommand implements Command {
     @Parameter(type = ItemIO.OUTPUT)
     public BdvHandle bdvh;
 
-    @Parameter(choices = {"Sum Projector", "Average Projector"})
+    @Parameter(choices = { SUM_PROJECTOR, AVERAGE_PROJECTOR })
     public String projector;
 
     @Override
