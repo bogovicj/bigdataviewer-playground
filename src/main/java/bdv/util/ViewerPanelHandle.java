@@ -24,7 +24,7 @@ public class ViewerPanelHandle extends BdvHandle {
     public String name;
 
     public ViewerPanelHandle(ViewerPanel viewerPanel, SetupAssignments sa, String name) {
-        super(BdvOptions.options());
+        //super(BdvOptions.options());
         this.viewer = viewerPanel;
         this.name = name;
         this.setupAssignments = sa;

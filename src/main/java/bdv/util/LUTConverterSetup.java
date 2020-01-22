@@ -56,11 +56,13 @@ public class LUTConverterSetup implements ConverterSetup
     {
         return false;
     }
-
+    /*
     @Override
     public Listeners<SetupChangeListener> setupChangeListeners() {
         return null;
     }
+
+     */
 
     @Override
     public int getSetupId()

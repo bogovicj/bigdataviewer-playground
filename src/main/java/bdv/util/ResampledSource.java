@@ -25,7 +25,7 @@ public class ResampledSource< T extends NumericType<T> & NativeType<T>> implemen
 
     Source<?> srcResamplingModel;
 
-    protected final DefaultInterpolators< T > interpolators = new DefaultInterpolators<>();
+    //protected final DefaultInterpolators< T > interpolators = new DefaultInterpolators<>();
 
     boolean reuseMipMaps;
 

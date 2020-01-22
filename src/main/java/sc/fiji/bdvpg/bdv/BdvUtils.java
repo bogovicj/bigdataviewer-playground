@@ -2,11 +2,11 @@ package sc.fiji.bdvpg.bdv;
 
 import bdv.tools.brightness.MinMaxGroup;
 import bdv.tools.transformation.TransformedSource;
-import bdv.util.Bdv;
+//import bdv.util.Bdv;
 import bdv.util.BdvHandle;
 import bdv.viewer.Source;
 import bdv.viewer.state.SourceState;
-import ij.IJ;
+//import ij.IJ;
 import net.imglib2.*;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.type.numeric.ARGBType;
@@ -249,6 +249,7 @@ public class BdvUtils
      * @param source
      * @return
      */
+    /*
     public static int getSourceIndex( Bdv bdv, Source< ? > source )
     {
         final List< SourceState< ? > > sources =
@@ -277,6 +278,8 @@ public class BdvUtils
 
         return -1;
     }
+    */
+
 
     public static ARGBType getSourceColor(BdvHandle bdvHandle, int sourceId )
     {

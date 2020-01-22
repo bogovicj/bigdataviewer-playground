@@ -1,7 +1,7 @@
 package sc.fiji.bdvpg.bdv;
 
 import bdv.util.BdvHandle;
-import bdv.util.BdvHandleFrame;
+//import bdv.util.BdvHandleFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -21,10 +21,12 @@ public class MenuAdder
 
 	public void addMenu( String menuText, String menuItemText )
 	{
+		/*
 		final JMenu jMenu = createMenuItem( menuText, menuItemText );
 		final JMenuBar bdvMenuBar = ( ( BdvHandleFrame ) bdvHandle ).getBigDataViewer().getViewerFrame().getJMenuBar();
 		bdvMenuBar.add( jMenu );
 		bdvMenuBar.updateUI();
+		*/
 	}
 
 	public JMenu createMenuItem( String menuText, String menuItemText )
