@@ -2,6 +2,7 @@ package sc.fiji.bdvpg.bdv.navigate;
 
 import bdv.BigDataViewer;
 //import bdv.util.RandomAccessibleIntervalSource;
+import bdv.util.RandomAccessibleIntervalSource;
 import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
 import ij.IJ;

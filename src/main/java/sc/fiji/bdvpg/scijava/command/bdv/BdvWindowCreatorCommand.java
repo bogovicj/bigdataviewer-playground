@@ -38,26 +38,26 @@ public class BdvWindowCreatorCommand implements Command {
     @Override
     public void run() {
         //------------ BdvHandleFrame
-        BdvOptions opts = BdvOptions.options().frameTitle(windowTitle);
-        if (is2D) opts = opts.is2D();
+        //BdvOptions opts = BdvOptions.options().frameTitle(windowTitle);
+        //if (is2D) opts = opts.is2D();
 
         // Create accumulate projector factory
         AccumulateProjectorFactory< ARGBType > factory = null;
         switch (projector) {
             case Projection.MIXED_PROJECTOR:
                 factory = new AccumulateMixedProjectorARGBFactory(  );
-                opts = opts.accumulateProjectorFactory(factory);
+                //opts = opts.accumulateProjectorFactory(factory);
             case Projection.SUM_PROJECTOR:
                 // Default projector
                 break;
             case Projection.AVERAGE_PROJECTOR:
                 factory = AccumulateAverageProjectorARGB.factory;
-                opts = opts.accumulateProjectorFactory(factory);
+                //opts = opts.accumulateProjectorFactory(factory);
                 break;
             default:
         }
 
-        BdvCreator creator = new BdvCreator(opts, interpolate);
+        BdvCreator creator = new BdvCreator(true); //opts, interpolate);
         creator.run();
         bdvh = creator.get();
 

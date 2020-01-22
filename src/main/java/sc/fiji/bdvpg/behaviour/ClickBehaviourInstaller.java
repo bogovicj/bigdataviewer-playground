@@ -26,8 +26,8 @@ public class ClickBehaviourInstaller
 	public void install( String name , String trigger )
 	{
 		Behaviours behaviours = new Behaviours( new InputTriggerConfig() );
-		// TODO : find this
-		behaviours.install( bdvHandle.getTriggerbindings(), name );
-		behaviours.behaviour( behaviour, name, trigger ) ;
+		// TODO : find these trigger bindings and fix
+		// behaviours.install( bdvHandle.getTriggerbindings(), name );
+		// behaviours.behaviour( behaviour, name, trigger ) ;
 	}
 }

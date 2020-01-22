@@ -66,7 +66,7 @@ public class ActiveBdvPreprocessor extends SingleInputPreprocessor<BigDataViewer
         } else {
 
             // Get the one with the most recent focus ?
-            Optional<BigDataViewer> bdvh = bdvhs.stream().filter(b -> b.getViewerPanel().hasFocus()).findFirst();
+            Optional<BigDataViewer> bdvh = bdvhs.stream().filter(b -> b.getViewer().hasFocus()).findFirst();
             if (bdvh.isPresent()) {
                 return bdvh.get();
             } else {

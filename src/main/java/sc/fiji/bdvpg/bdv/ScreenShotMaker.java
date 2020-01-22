@@ -3,15 +3,14 @@ package sc.fiji.bdvpg.bdv;
 import bdv.BigDataViewer;
 import bdv.viewer.Interpolation;
 import bdv.viewer.Source;
+import bdv.viewer.SourceAndConverter;
 import ij.CompositeImage;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.plugin.Duplicator;
 import ij.process.LUT;
+import net.imglib2.*;
 import net.imglib2.Cursor;
-import net.imglib2.RandomAccess;
-import net.imglib2.RandomAccessibleInterval;
-import net.imglib2.RealRandomAccess;
 import net.imglib2.algorithm.util.Grids;
 import net.imglib2.img.array.ArrayImgs;
 import net.imglib2.img.display.imagej.ImageJFunctions;
@@ -26,7 +25,7 @@ import sc.fiji.bdvpg.converter.lut.Luts;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import static sc.fiji.bdvpg.bdv.BdvUtils.*;
 
@@ -99,19 +98,20 @@ public class ScreenShotMaker {
         final ArrayList< Boolean > isSegmentations = new ArrayList<>();
         final ArrayList< double[] > displayRanges = new ArrayList<>();
 
-        // TODO : replace indexing logic
-        final List< Integer > sourceIndices = bdv.getViewer().getState().getVisibleSourceIndices();
+        //final List< Integer > sourceIndices = getVisibleSourceIndices( bdv );
 
         final int t = bdv.getViewer().state().getCurrentTimepoint();
 
-        for ( int sourceIndex : sourceIndices )
+        Set<SourceAndConverter<?>> sacs = bdv.getViewer().state().getVisibleAndPresentSources();
+
+        for ( SourceAndConverter sac : sacs )
         {
-            if ( ! isSourceIntersectingCurrentView( bdv, sourceIndex, checkSourceIntersectionWithViewerPlaneOnlyIn2D ) ) continue;
+            if ( ! isSourceIntersectingCurrentView( bdv, t, sac, checkSourceIntersectionWithViewerPlaneOnlyIn2D ) ) continue;
 
             final RandomAccessibleInterval< UnsignedShortType > capture
                     = ArrayImgs.unsignedShorts( captureWidth, captureHeight );
 
-            Source< ? > source = getSource( bdv, sourceIndex );
+            Source< ? > source = sac.getSpimSource();
 
             final int level = getLevel( source, outputVoxelSpacing );
             final AffineTransform3D sourceTransform =
@@ -152,8 +152,8 @@ public class ScreenShotMaker {
             });
 
             captures.add( capture );
-            colors.add( getSourceColor( bdv, sourceIndex ) );
-            displayRanges.add( getDisplayRange( bdv, sourceIndex) );
+            colors.add( new ARGBType(ARGBType.rgba(255,255,255,0)));// TODO fix getSourceColor( bdv, sourceIndex ) );
+            displayRanges.add( new double[]{ 0, 255 });// TODO fix getDisplayRange( bdv, sourceIndex) );
         }
 
         final double[] captureVoxelSpacing = getCaptureVoxelSpacing( outputVoxelSpacing, viewerVoxelSpacing );
@@ -251,5 +251,39 @@ public class ScreenShotMaker {
         return compositeImage;
     }
 
+
+    public static boolean isSourceIntersectingCurrentView( BigDataViewer bdv, int t, SourceAndConverter sac, boolean is2D )
+    {
+        final Interval interval = getSourceGlobalBoundingInterval( t, sac );
+
+        final Interval viewerInterval =
+                Intervals.smallestContainingInterval(
+                        getViewerGlobalBoundingInterval( bdv ) );
+
+        boolean intersects = false;
+        if (is2D) {
+            intersects = !Intervals.isEmpty(
+                    intersect2D(interval, viewerInterval));
+        } else {
+            intersects = ! Intervals.isEmpty(
+                    Intervals.intersect( interval, viewerInterval ) );
+        }
+        return intersects;
+    }
+
+    // TODO : check whether level 0 is good
+    public static Interval getSourceGlobalBoundingInterval( int t, SourceAndConverter sac )
+    {
+
+        final AffineTransform3D sourceTransform = new AffineTransform3D();
+
+        sac.getSpimSource().getSourceTransform( t, 0, sourceTransform );
+
+        final RandomAccessibleInterval< ? > rai = sac.getSpimSource().getSource(t,0);
+               // getRandomAccessibleInterval( bdvHandle, sourceId );
+        final Interval interval =
+                Intervals.smallestContainingInterval( sourceTransform.estimateBounds( rai ) );
+        return interval;
+    }
 
 }
