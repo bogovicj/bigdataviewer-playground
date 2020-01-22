@@ -122,9 +122,10 @@
 		See Issue https://github.com/saalfeldlab/bigwarp/issues/83
         <bigwarp_fiji.version>5.1.0</bigwarp_fiji.version>-->
 
-		<bigdataviewer-core.version>7.0.0</bigdataviewer-core.version>
-		<bigdataviewer-vistools.version>1.0.0-beta-15</bigdataviewer-vistools.version>
+		<bigdataviewer-core.version>8.0.1-SNAPSHOT</bigdataviewer-core.version>
+		<bigdataviewer-vistools.version>1.0.0-beta-19</bigdataviewer-vistools.version>
 		<bigwarp_fiji.version>5.0.0</bigwarp_fiji.version>
+		<ui-behaviour.version>2.0.1</ui-behaviour.version>
 	</properties>
 
 	<dependencies>

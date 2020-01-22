@@ -4,6 +4,7 @@ import bdv.tools.brightness.ConverterSetup;
 import bdv.viewer.RequestRepaint;
 import net.imglib2.display.ColorConverter;
 import net.imglib2.type.numeric.ARGBType;
+import org.scijava.listeners.Listeners;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,6 +52,11 @@ public class ARGBColorConverterSetup implements ConverterSetup
     public boolean supportsColor()
     {
         return converters.get( 0 ).supportsColor();
+    }
+
+    @Override
+    public Listeners<SetupChangeListener> setupChangeListeners() {
+        return null;
     }
 
     @Override

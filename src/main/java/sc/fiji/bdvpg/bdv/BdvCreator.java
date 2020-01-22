@@ -57,7 +57,7 @@ public class BdvCreator implements Runnable, Supplier<BdvHandle>
 
 		if ( interpolate ) bdvHandle.getViewerPanel().setInterpolation( Interpolation.NLINEAR );
 
-		bss.removeFromBdv();
+		//bss.removeFromBdv();
 	}
 
 	public BdvHandle get()

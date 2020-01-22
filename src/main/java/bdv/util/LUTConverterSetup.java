@@ -7,6 +7,7 @@ import net.imglib2.converter.RealLUTConverter;
 import net.imglib2.display.AbstractLinearRange;
 import net.imglib2.display.ColorConverter;
 import net.imglib2.type.numeric.ARGBType;
+import org.scijava.listeners.Listeners;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +55,11 @@ public class LUTConverterSetup implements ConverterSetup
     public boolean supportsColor()
     {
         return false;
+    }
+
+    @Override
+    public Listeners<SetupChangeListener> setupChangeListeners() {
+        return null;
     }
 
     @Override
