@@ -1,10 +1,9 @@
 package sc.fiji.bdvpg.bdv.projector;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
 import bdv.viewer.render.AccumulateProjector;
-import bdv.viewer.render.AccumulateProjectorFactory;
 import bdv.viewer.render.VolatileProjector;
 import net.imglib2.Cursor;
 import net.imglib2.RandomAccessible;
@@ -26,7 +25,7 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 	private final String[] projectionModes;
 
 	public AccumulateMixedProjectorARGB(
-			BdvHandle bdvHandle,
+			BigDataViewer bdvHandle,
 			final ArrayList< VolatileProjector > sourceProjectors,
 			final ArrayList< Source< ? > > sources,
 			final ArrayList< ? extends RandomAccessible< ? extends ARGBType > > sourceScreenImages,
@@ -104,7 +103,7 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 
 	}
 
-	private String[] getProjectionModes( BdvHandle bdvHandle, ArrayList< Source< ? > > sources )
+	private String[] getProjectionModes(BigDataViewer bdvHandle, ArrayList< Source< ? > > sources )
 	{
 		// We need to reconstitute the sequence of action that lead to the current indexes
 
@@ -114,7 +113,7 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 				.getSourceAndConverterOf(bdvHandle);
 
 		// Fetching the indexes of visible sources in the BdvHandle
-		List<Integer> visibleIndexes = bdvHandle.getViewerPanel().getState().getVisibleSourceIndices();
+		List<Integer> visibleIndexes = bdvHandle.getViewer().getState().getVisibleSourceIndices();
 		// In ascending order
 		Collections.sort(visibleIndexes);
 

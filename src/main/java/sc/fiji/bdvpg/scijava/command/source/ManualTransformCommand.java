@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.command.source;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.viewer.SourceAndConverter;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
@@ -22,7 +22,7 @@ public class ManualTransformCommand implements Command {
     SourceAndConverter[] sacs;
 
     @Parameter
-    BdvHandle bdvHandle;
+    BigDataViewer bdvHandle;
 
     public void run() {
         ManualRegistrationStarter manualRegistrationStarter = new ManualRegistrationStarter(bdvHandle, sacs);

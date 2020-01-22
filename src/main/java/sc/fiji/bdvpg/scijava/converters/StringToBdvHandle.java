@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.converters;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.object.ObjectService;
 import org.scijava.plugin.Parameter;
@@ -10,13 +10,13 @@ import sc.fiji.bdvpg.scijava.BdvHandleHelper;
 import java.util.Optional;
 
 @Plugin(type = org.scijava.convert.Converter.class)
-public class StringToBdvHandle<I extends String, O extends BdvHandle> extends AbstractConverter<I, O> {
+public class StringToBdvHandle<I extends String, O extends BigDataViewer> extends AbstractConverter<I, O> {
     @Parameter
     ObjectService os;
 
     @Override
     public <T> T convert(Object src, Class<T> dest) {
-        Optional<BdvHandle> ans =  os.getObjects(BdvHandle.class).stream().filter(bdvh ->
+        Optional<BigDataViewer> ans =  os.getObjects(BigDataViewer.class).stream().filter(bdvh ->
                 (bdvh.toString().equals(src))||(BdvHandleHelper.getWindowTitle(bdvh).equals(src))
         ).findFirst();
         if (ans.isPresent()) {
@@ -28,7 +28,7 @@ public class StringToBdvHandle<I extends String, O extends BdvHandle> extends Ab
 
     @Override
     public Class<O> getOutputType() {
-        return (Class<O>) BdvHandle.class;
+        return (Class<O>) BigDataViewer.class;
     }
 
     @Override

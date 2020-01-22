@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.bdv.navigate;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.ui.TransformListener;
 
@@ -30,7 +30,7 @@ public class ViewerTransformSyncStarter implements Runnable {
     /**
      * Array of BdvHandles to synchronize
      */
-    BdvHandle[] bdvHandles;
+    BigDataViewer[] bdvHandles;
 
     /**
      * Reference to the BdvHandle which will serve as a reference for the
@@ -38,20 +38,20 @@ public class ViewerTransformSyncStarter implements Runnable {
      * currently used by the user. If not set, the first synchronization
      * will look like it's a random BdvHandle which is used (one not in focus)
      */
-    BdvHandle bdvHandleInitialReference = null;
+    BigDataViewer bdvHandleInitialReference = null;
 
     /**
      * Map which links each BdvHandle to the TransformListener which has been added
      * for synchronization purpose. This object contains all what's neede to stop
      * the synchronization
      */
-    Map<BdvHandle, TransformListener<AffineTransform3D>> bdvHandleToTransformListener = new HashMap<>();
+    Map<BigDataViewer, TransformListener<AffineTransform3D>> bdvHandleToTransformListener = new HashMap<>();
 
-    public ViewerTransformSyncStarter(BdvHandle[] bdvHandles) {
+    public ViewerTransformSyncStarter(BigDataViewer[] bdvHandles) {
        this.bdvHandles = bdvHandles;
     }
 
-    public void setBdvHandleInitialReference(BdvHandle bdvHandle) {
+    public void setBdvHandleInitialReference(BigDataViewer bdvHandle) {
         bdvHandleInitialReference = bdvHandle;
     }
 
@@ -71,8 +71,8 @@ public class ViewerTransformSyncStarter implements Runnable {
             // (called nextBdvHandle). nextBdvHandle is bdvHandles[i+1] in most cases,
             // unless it's the end of the array,
             // where in this case nextBdvHandle is bdvHandles[0]
-            BdvHandle currentBdvHandle = bdvHandles[i];
-            BdvHandle nextBdvHandle;
+            BigDataViewer currentBdvHandle = bdvHandles[i];
+            BigDataViewer nextBdvHandle;
 
             // Identifying nextBdvHandle
             if (i == bdvHandles.length-1) {
@@ -86,16 +86,16 @@ public class ViewerTransformSyncStarter implements Runnable {
                     (at3D) -> {
                         // Is the transform necessary ? That's the stop condition
                         AffineTransform3D ati = new AffineTransform3D();
-                        nextBdvHandle.getViewerPanel().getState().getViewerTransform(ati);
+                        nextBdvHandle.getViewer().state().getViewerTransform(ati);
                         if (!Arrays.equals(at3D.getRowPackedCopy(), ati.getRowPackedCopy())) {
                             // Yes -> triggers a transform change to the nextBdvHandle
-                            nextBdvHandle.getViewerPanel().setCurrentViewerTransform(at3D.copy());
-                            nextBdvHandle.getViewerPanel().requestRepaint();
+                            nextBdvHandle.getViewer().setCurrentViewerTransform(at3D.copy());
+                            nextBdvHandle.getViewer().requestRepaint();
                         }
                     };
 
             // Adding this transform listener to the currenBdvHandle
-            currentBdvHandle.getViewerPanel().addTransformListener(listener);
+            currentBdvHandle.getViewer().addTransformListener(listener);
 
             // Storing the transform listener -> needed to remove them in order to stop synchronization when needed
             bdvHandleToTransformListener.put(bdvHandles[i], listener);
@@ -104,9 +104,9 @@ public class ViewerTransformSyncStarter implements Runnable {
         // Setting first transform for initial synchronization,
         // but only if the two necessary objects are present (the origin BdvHandle and the transform
          if ((bdvHandleInitialReference !=null)&&(at3Dorigin!=null)) {
-             for (BdvHandle bdvh: bdvHandles) {
-                 bdvh.getViewerPanel().setCurrentViewerTransform(at3Dorigin.copy());
-                 bdvh.getViewerPanel().requestRepaint();
+             for (BigDataViewer bdvh: bdvHandles) {
+                 bdvh.getViewer().setCurrentViewerTransform(at3Dorigin.copy());
+                 bdvh.getViewer().requestRepaint();
              }
          }
     }
@@ -119,12 +119,12 @@ public class ViewerTransformSyncStarter implements Runnable {
     private AffineTransform3D getViewTransformForInitialSynchronization() {
         AffineTransform3D at3Dorigin = null;
         for (int i = 0; i< bdvHandles.length; i++) {
-            BdvHandle bdvHandle = bdvHandles[i];
+            BigDataViewer bdvHandle = bdvHandles[i];
             // if the BdvHandle is the one that should be used for initial synchronization
             if (bdvHandle.equals(bdvHandleInitialReference)) {
                 // Storing the transform that will be used for first synchronization
                 at3Dorigin = new AffineTransform3D();
-                bdvHandle.getViewerPanel().getState().getViewerTransform(at3Dorigin);
+                bdvHandle.getViewer().state().getViewerTransform(at3Dorigin);
             }
         }
         return at3Dorigin;
@@ -135,7 +135,7 @@ public class ViewerTransformSyncStarter implements Runnable {
      * see ViewerTransformSyncStopper
      * @return
      */
-    public Map<BdvHandle, TransformListener<AffineTransform3D>> getSynchronizers() {
+    public Map<BigDataViewer, TransformListener<AffineTransform3D>> getSynchronizers() {
         return bdvHandleToTransformListener;
     }
 }

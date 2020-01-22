@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.widget;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import org.scijava.Priority;
 import org.scijava.object.ObjectService;
 import org.scijava.plugin.Parameter;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 
 @Plugin(type = InputWidget.class, priority = Priority.EXTREMELY_HIGH)
-public class SwingBdvHandleListWidget extends SwingInputWidget<BdvHandle[]> implements
+public class SwingBdvHandleListWidget extends SwingInputWidget<BigDataViewer[]> implements
         BdvHandleListWidget<JPanel> {
 
     @Override
@@ -31,20 +31,20 @@ public class SwingBdvHandleListWidget extends SwingInputWidget<BdvHandle[]> impl
 
     @Override
     public boolean supports(final WidgetModel model) {
-        return super.supports(model) && model.isType(BdvHandle[].class);
+        return super.supports(model) && model.isType(BigDataViewer[].class);
     }
 
     @Override
-    public BdvHandle[] getValue() {
+    public BigDataViewer[] getValue() {
         return getSelectedBdvHandles();
     }
 
     JList list;
 
-    public BdvHandle[] getSelectedBdvHandles() {
+    public BigDataViewer[] getSelectedBdvHandles() {
         List<RenamableBdvHandle> selected = list.getSelectedValuesList();
         return  selected.stream().map((e) -> e.bdvh)
-                .collect(Collectors.toList()).toArray(new BdvHandle[selected.size()]);
+                .collect(Collectors.toList()).toArray(new BigDataViewer[selected.size()]);
     }
 
     @Parameter
@@ -53,7 +53,7 @@ public class SwingBdvHandleListWidget extends SwingInputWidget<BdvHandle[]> impl
     @Override
     public void set(final WidgetModel model) {
         super.set(model);
-        List<RenamableBdvHandle> bdvhs = os.getObjects(BdvHandle.class).stream().map(bdvh -> new RenamableBdvHandle(bdvh)).collect(Collectors.toList());
+        List<RenamableBdvHandle> bdvhs = os.getObjects(BigDataViewer.class).stream().map(bdvh -> new RenamableBdvHandle(bdvh)).collect(Collectors.toList());
         RenamableBdvHandle[] data = bdvhs.toArray(new RenamableBdvHandle[bdvhs.size()]);
         list = new JList(data); //data has type Object[]
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -65,9 +65,9 @@ public class SwingBdvHandleListWidget extends SwingInputWidget<BdvHandle[]> impl
 
     public class RenamableBdvHandle {
 
-        public BdvHandle bdvh;
+        public BigDataViewer bdvh;
 
-        public RenamableBdvHandle(BdvHandle bdvh) {
+        public RenamableBdvHandle(BigDataViewer bdvh) {
             this.bdvh = bdvh;
         }
 

@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.command.bdv;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
@@ -20,7 +20,7 @@ import sc.fiji.bdvpg.scijava.ScijavaBdvDefaults;
 public class ViewTransformLoggerCommand implements Command {
 
     @Parameter
-    BdvHandle bdvh;
+    BigDataViewer bdvh;
 
     @Override
     public void run() {

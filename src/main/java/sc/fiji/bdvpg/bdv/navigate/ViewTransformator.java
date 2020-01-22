@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.bdv.navigate;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import net.imglib2.realtransform.AffineTransform3D;
 
 /**
@@ -13,10 +13,10 @@ import net.imglib2.realtransform.AffineTransform3D;
  */
 public class ViewTransformator implements Runnable {
 
-    private BdvHandle bdvHandle;
+    private BigDataViewer bdvHandle;
     private AffineTransform3D transform;
 
-    public ViewTransformator(BdvHandle bdvHandle, AffineTransform3D transform) {
+    public ViewTransformator(BigDataViewer bdvHandle, AffineTransform3D transform) {
         this.bdvHandle = bdvHandle;
         this.transform = transform;
     }
@@ -25,13 +25,13 @@ public class ViewTransformator implements Runnable {
     public void run() {
         // get current transform
         AffineTransform3D view = new AffineTransform3D();
-        bdvHandle.getViewerPanel().getState().getViewerTransform(view);
+        bdvHandle.getViewer().state().getViewerTransform(view);
 
         // change the transform
         view = view.concatenate(transform);
 
         // submit to BDV
-        bdvHandle.getViewerPanel().setCurrentViewerTransform(view);
+        bdvHandle.getViewer().setCurrentViewerTransform(view);
 
     }
 }

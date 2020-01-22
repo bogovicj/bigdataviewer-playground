@@ -1,6 +1,6 @@
 package src.sc.fiji.bdvpg.bdv.screenshot;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.util.RandomAccessibleIntervalSource;
 import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
@@ -45,7 +45,7 @@ public class ScreenshotDemo {
         SourceAndConverter sac = SourceAndConverterUtils.createSourceAndConverter(source);
 
         // Creates a BdvHandle
-        BdvHandle bdvHandle = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
+        BigDataViewer bdvHandle = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
 
         // Show the sourceandconverter
         SourceAndConverterServices.getSourceAndConverterDisplayService().show(bdvHandle, sac);

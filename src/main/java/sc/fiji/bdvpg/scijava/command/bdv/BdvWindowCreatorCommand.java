@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.command.bdv;
 
-import bdv.util.*;
+import bdv.*;
 import bdv.viewer.render.AccumulateProjectorFactory;
 import net.imglib2.type.numeric.ARGBType;
 import org.scijava.ItemIO;
@@ -9,7 +9,6 @@ import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 import sc.fiji.bdvpg.bdv.BdvCreator;
 import sc.fiji.bdvpg.bdv.projector.AccumulateAverageProjectorARGB;
-import sc.fiji.bdvpg.bdv.projector.AccumulateMixedProjectorARGB;
 import sc.fiji.bdvpg.bdv.projector.AccumulateMixedProjectorARGBFactory;
 import sc.fiji.bdvpg.bdv.projector.Projection;
 import sc.fiji.bdvpg.scijava.ScijavaBdvDefaults;
@@ -31,7 +30,7 @@ public class BdvWindowCreatorCommand implements Command {
      * This triggers: BdvHandlePostprocessor
      */
     @Parameter(type = ItemIO.OUTPUT)
-    public BdvHandle bdvh;
+    public BigDataViewer bdvh;
 
     @Parameter(choices = { Projection.MIXED_PROJECTOR, Projection.SUM_PROJECTOR, Projection.AVERAGE_PROJECTOR})
     public String projector;

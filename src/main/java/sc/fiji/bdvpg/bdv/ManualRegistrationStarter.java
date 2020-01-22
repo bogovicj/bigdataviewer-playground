@@ -1,7 +1,7 @@
 package sc.fiji.bdvpg.bdv;
 
 import bdv.tools.transformation.TransformedSource;
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.viewer.SourceAndConverter;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.ui.TransformListener;
@@ -53,7 +53,7 @@ public class ManualRegistrationStarter implements Runnable {
     /**
      * bdvHandle used for the manual registration
      */
-    BdvHandle bdvHandle;
+    BigDataViewer bdvHandle;
 
     /**
      * Current registration state
@@ -66,7 +66,7 @@ public class ManualRegistrationStarter implements Runnable {
      */
     TransformListener<AffineTransform3D> manualRegistrationListener;
 
-    public ManualRegistrationStarter(BdvHandle bdvHandle, SourceAndConverter... sacs) {
+    public ManualRegistrationStarter(BigDataViewer bdvHandle, SourceAndConverter... sacs) {
             this.sacs = sacs;
             this.bdvHandle = bdvHandle;
     }
@@ -91,7 +91,7 @@ public class ManualRegistrationStarter implements Runnable {
 
         // View of the BdvHandle before starting the registration
         AffineTransform3D originalViewTransform = new AffineTransform3D();
-        bdvHandle.getViewerPanel().getState().getViewerTransform(originalViewTransform);
+        bdvHandle.getViewer().state().getViewerTransform(originalViewTransform);
 
         manualRegistrationListener = (newView) -> {
                 // Compute "difference" of ViewTransform beteween the original state and the current state
@@ -106,10 +106,10 @@ public class ManualRegistrationStarter implements Runnable {
         };
 
         // Sets the listener
-        bdvHandle.getViewerPanel().addTransformListener(manualRegistrationListener);
+        bdvHandle.getViewer().addTransformListener(manualRegistrationListener);
     }
 
-    public BdvHandle getBdvHandle() {
+    public BigDataViewer getBdvHandle() {
         return bdvHandle;
     }
 

@@ -1,7 +1,7 @@
 package sc.fiji.bdvpg.scijava.command.source;
 
 import bdv.tools.brightness.ConverterSetup;
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.viewer.SourceAndConverter;
 import org.scijava.ItemIO;
 import org.scijava.command.Command;
@@ -29,10 +29,10 @@ public class BigWarpLauncherCommand implements Command {
     SourceAndConverter[] fixedSources;
 
     @Parameter(type = ItemIO.OUTPUT)
-    BdvHandle bdvhQ;
+    BigDataViewer bdvhQ;
 
     @Parameter(type = ItemIO.OUTPUT)
-    BdvHandle bdvhP;
+    BigDataViewer bdvhP;
 
     @Parameter
 	SourceAndConverterBdvDisplayService bsds;

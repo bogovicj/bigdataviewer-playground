@@ -31,16 +31,10 @@
 
 package sc.fiji.bdvpg.scijava.services;
 
-import bdv.util.BdvHandle;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import mpicbg.spim.data.generic.AbstractSpimData;
-import net.imglib2.realtransform.AffineTransform3D;
-import net.imglib2.realtransform.RealTransform;
 import org.scijava.cache.CacheService;
-import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
-import org.scijava.script.ScriptService;
 import org.scijava.service.AbstractService;
 import org.scijava.service.Service;
 

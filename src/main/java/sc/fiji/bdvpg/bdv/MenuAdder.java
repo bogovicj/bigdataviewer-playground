@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.bdv;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 //import bdv.util.BdvHandleFrame;
 
 import javax.swing.*;
@@ -8,10 +8,10 @@ import java.awt.event.ActionListener;
 
 public class MenuAdder
 {
-	private final BdvHandle bdvHandle;
+	private final BigDataViewer bdvHandle;
 	private final ActionListener actionListener;
 
-	public MenuAdder( BdvHandle bdvHandle, ActionListener actionListener )
+	public MenuAdder(BigDataViewer bdvHandle, ActionListener actionListener )
 	{
 		System.setProperty("apple.laf.useScreenMenuBar", "false");
 

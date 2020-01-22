@@ -1,8 +1,8 @@
 package sc.fiji.bdvpg.sourceandconverter.register;
 
 import bdv.tools.brightness.ConverterSetup;
-import bdv.util.BdvHandle;
-import bdv.util.ViewerPanelHandle;
+import bdv.BigDataViewer;
+//import bdv.util.ViewerPanelHandle;
 import bdv.viewer.SourceAndConverter;
 import bigwarp.BigWarp;
 import mpicbg.spim.data.SpimDataException;
@@ -32,9 +32,9 @@ public class BigWarpLauncher implements Runnable {
 
     String bigWarpName;
 
-    BdvHandle bdvHandleP;
+    BigDataViewer bdvHandleP;
 
-    BdvHandle bdvHandleQ;
+    BigDataViewer bdvHandleQ;
 
     // Issue with constructor :
     // Making a constructor with lists of SourceAndConverters:
@@ -82,6 +82,8 @@ public class BigWarpLauncher implements Runnable {
     public void run() {
         try {
             bigWarp = new BigWarp(bwData, bigWarpName, null);
+            // TODO : fix
+            /*
             // What does P and Q stand for ? Not sure about who's moving and who's fixed
             bdvHandleP = new ViewerPanelHandle(bigWarp.getViewerFrameP().getViewerPanel(), bigWarp.getSetupAssignments(), bigWarpName+"_Moving");
             bdvHandleQ = new ViewerPanelHandle(bigWarp.getViewerFrameQ().getViewerPanel(), bigWarp.getSetupAssignments(), bigWarpName+"_Fixed");
@@ -101,7 +103,7 @@ public class BigWarpLauncher implements Runnable {
             for (SourceAndConverter sac : warpedSources) {
                 SourceAndConverterServices.getSourceAndConverterService().register(sac);
             }
-
+            */
         } catch (SpimDataException e) {
             e.printStackTrace();
         }
@@ -109,11 +111,11 @@ public class BigWarpLauncher implements Runnable {
 
     // Outputs
 
-    public BdvHandle getBdvHandleP() {
+    public BigDataViewer getBdvHandleP() {
         return bdvHandleP;
     }
 
-    public BdvHandle getBdvHandleQ() {
+    public BigDataViewer getBdvHandleQ() {
         return bdvHandleQ;
     }
 

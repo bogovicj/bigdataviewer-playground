@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.bdv.sourceandconverter;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.viewer.SourceAndConverter;
 import sc.fiji.bdvpg.services.SourceAndConverterServices;
 
@@ -9,9 +9,9 @@ import java.util.function.Consumer;
 public class SourceRemover implements Runnable, Consumer<SourceAndConverter>
 {
 	SourceAndConverter srcIn;
-	BdvHandle bdvh;
+	BigDataViewer bdvh;
 
-	public SourceRemover(BdvHandle bdvh, SourceAndConverter srcIn) {
+	public SourceRemover(BigDataViewer bdvh, SourceAndConverter srcIn) {
 		this.srcIn=srcIn;
 		this.bdvh=bdvh;
 	}

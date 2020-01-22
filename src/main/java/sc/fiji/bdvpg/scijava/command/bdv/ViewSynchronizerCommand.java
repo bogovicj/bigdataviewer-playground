@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.command.bdv;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
@@ -29,7 +29,7 @@ import java.awt.event.WindowEvent;
 public class ViewSynchronizerCommand implements Command {
 
     @Parameter(label = "Select Windows to synchronize")
-    BdvHandle[] bdvhs;
+    BigDataViewer[] bdvhs;
 
     ViewerTransformSyncStarter sync;
 
@@ -53,7 +53,7 @@ public class ViewSynchronizerCommand implements Command {
 
         // Building JFrame with a simple panel and textarea
         String text = "";
-        for (BdvHandle bdvh:bdvhs) {
+        for (BigDataViewer bdvh:bdvhs) {
             text+= BdvHandleHelper.getWindowTitle(bdvh)+"\n";
         }
 

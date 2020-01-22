@@ -1,9 +1,8 @@
 package sc.fiji.bdvpg.bdv;
 
+import bdv.BigDataViewer;
 import bdv.tools.brightness.MinMaxGroup;
-import bdv.tools.transformation.TransformedSource;
 //import bdv.util.Bdv;
-import bdv.util.BdvHandle;
 import bdv.viewer.Source;
 import bdv.viewer.state.SourceState;
 //import ij.IJ;
@@ -25,13 +24,13 @@ import java.util.List;
  */
 public class BdvUtils
 {
-    public static double getViewerVoxelSpacing( BdvHandle bdv )
+    public static double getViewerVoxelSpacing( BigDataViewer bdv )
     {
-        final int windowWidth = getBdvWindowWidth( bdv );
-        final int windowHeight = getBdvWindowHeight( bdv );
+        final int windowWidth = bdv.getViewer().getWidth();
+        final int windowHeight = bdv.getViewer().getHeight();
 
         final AffineTransform3D viewerTransform = new AffineTransform3D();
-        bdv.getViewerPanel().getState().getViewerTransform( viewerTransform );
+        bdv.getViewer().state().getViewerTransform( viewerTransform );
 
         final double[] physicalA = new double[ 3 ];
         final double[] physicalB = new double[ 3 ];
@@ -59,26 +58,31 @@ public class BdvUtils
         return viewerPhysicalVoxelSpacingX;
     }
 
+    /*
 
-
-    public static int getBdvWindowWidth( BdvHandle bdvHandle )
+    public static int getBdvWindowWidth( BigDataViewer bdvHandle )
     {
         return bdvHandle.getViewerPanel().getDisplay().getWidth();
     }
 
 
-    public static int getBdvWindowHeight( BdvHandle bdvHandle )
+    public static int getBdvWindowHeight( BigDataViewer bdvHandle )
     {
         return bdvHandle.getViewerPanel().getDisplay().getHeight();
     }
 
-    public static List< Integer > getVisibleSourceIndices(BdvHandle bdvHandle )
+     */
+
+    /*
+    public static List< Integer > getVisibleSourceIndices(BigDataViewer bdvHandle )
     {
         return bdvHandle.getViewerPanel().getState().getVisibleSourceIndices();
     }
 
+     */
 
-    public static boolean isSourceIntersectingCurrentView( BdvHandle bdv, int sourceIndex, boolean is2D )
+    /*
+    public static boolean isSourceIntersectingCurrentView(BigDataViewer bdv, int sourceIndex, boolean is2D )
     {
         final Interval interval = getSourceGlobalBoundingInterval( bdv, sourceIndex );
 
@@ -97,6 +101,8 @@ public class BdvUtils
         return intersects;
     }
 
+     */
+
     public static FinalInterval intersect2D( final Interval intervalA, final Interval intervalB )
     {
         assert intervalA.numDimensions() == intervalB.numDimensions();
@@ -111,21 +117,22 @@ public class BdvUtils
         return new FinalInterval( min, max );
     }
 
-    public static FinalRealInterval getViewerGlobalBoundingInterval(BdvHandle bdvHandle )
+    public static FinalRealInterval getViewerGlobalBoundingInterval(BigDataViewer bdvHandle )
     {
         AffineTransform3D viewerTransform = new AffineTransform3D();
-        bdvHandle.getViewerPanel().getState().getViewerTransform( viewerTransform );
+        bdvHandle.getViewer().state().getViewerTransform( viewerTransform );
         viewerTransform = viewerTransform.inverse();
         final long[] min = new long[ 3 ];
         final long[] max = new long[ 3 ];
-        max[ 0 ] = bdvHandle.getViewerPanel().getWidth();
-        max[ 1 ] = bdvHandle.getViewerPanel().getHeight();
+        max[ 0 ] = bdvHandle.getViewer().getWidth();
+        max[ 1 ] = bdvHandle.getViewer().getHeight();
         final FinalRealInterval realInterval
                 = viewerTransform.estimateBounds( new FinalInterval( min, max ) );
         return realInterval;
     }
 
-    public static Interval getSourceGlobalBoundingInterval( BdvHandle bdvHandle, int sourceId )
+    /*
+    public static Interval getSourceGlobalBoundingInterval(BigDataViewer bdvHandle, int sourceId )
     {
         final AffineTransform3D sourceTransform =
                 getSourceTransform( bdvHandle, sourceId );
@@ -136,24 +143,35 @@ public class BdvUtils
         return interval;
     }
 
-    public static AffineTransform3D getSourceTransform( BdvHandle bdvHandle, int sourceId )
+     */
+
+    /*
+    public static AffineTransform3D getSourceTransform(BigDataViewer bdvHandle, int sourceId )
     {
         final AffineTransform3D sourceTransform = new AffineTransform3D();
         bdvHandle.getViewerPanel().getState().getSources().get( sourceId ).getSpimSource().getSourceTransform( 0, 0, sourceTransform );
         return sourceTransform;
     }
 
-    public static RandomAccessibleInterval< ? > getRandomAccessibleInterval( BdvHandle bdvHandle, int sourceId )
+     */
+
+    /*
+    public static RandomAccessibleInterval< ? > getRandomAccessibleInterval(BigDataViewer bdvHandle, int sourceId )
     {
         return bdvHandle.getViewerPanel().getState().getSources().get( sourceId ).getSpimSource().getSource( 0, 0 );
     }
 
-    public static Source< ? > getSource( BdvHandle bdvHandle, int sourceIndex )
+     */
+
+    /*
+    public static Source< ? > getSource(BigDataViewer bdvHandle, int sourceIndex )
     {
         final List<SourceState< ? >> sources = bdvHandle.getViewerPanel().getState().getSources();
 
         return sources.get( sourceIndex ).getSpimSource();
     }
+
+     */
 
 
 
@@ -195,7 +213,7 @@ public class BdvUtils
         return sourceTransform;
     }
 
-
+    // DO WE USE THIS ?
     public static double[] getCalibration( Source source, int level )
     {
         final AffineTransform3D sourceTransform = new AffineTransform3D();
@@ -207,11 +225,13 @@ public class BdvUtils
         return calibration;
     }
 
-
-    public static void repaint( BdvHandle bdvHandle )
+    /*
+    public static void repaint( BigDataViewer bdvHandle )
     {
         bdvHandle.getViewerPanel().requestRepaint();
     }
+
+     */
 
     public static double[] getScale(AffineTransform3D sourceTransform) {
         double[] calibration = new double[3];
@@ -228,8 +248,8 @@ public class BdvUtils
 
         return calibration;
     }
-
-    public static MinMaxGroup getMinMaxGroup( BdvHandle bdvHandle, Source< ? > source )
+    /*
+    public static MinMaxGroup getMinMaxGroup(BigDataViewer bdvHandle, Source< ? > source )
     {
         final int sourceIndex = getSourceIndex( bdvHandle, source );
 
@@ -239,7 +259,7 @@ public class BdvUtils
 
         return minmax;
     }
-
+    */
 
     /**
      * TODO: remove the print statements or make them some debug mode.
@@ -280,13 +300,15 @@ public class BdvUtils
     }
     */
 
-
-    public static ARGBType getSourceColor(BdvHandle bdvHandle, int sourceId )
+    /*
+    public static ARGBType getSourceColor(BigDataViewer bdvHandle, int sourceId )
     {
         return bdvHandle.getSetupAssignments().getConverterSetups().get( sourceId ).getColor();
     }
+    */
 
-    public static double[] getDisplayRange( BdvHandle bdvHandle, int sourceId )
+    /*
+    public static double[] getDisplayRange(BigDataViewer bdvHandle, int sourceId )
     {
         final double displayRangeMin = bdvHandle.getSetupAssignments()
                 .getConverterSetups().get( sourceId ).getDisplayRangeMin();
@@ -295,6 +317,8 @@ public class BdvUtils
 
         return new double[]{ displayRangeMin, displayRangeMax };
     }
+
+     */
 
 
 }

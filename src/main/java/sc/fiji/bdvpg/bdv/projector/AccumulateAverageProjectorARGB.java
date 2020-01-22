@@ -1,6 +1,5 @@
 package sc.fiji.bdvpg.bdv.projector;
 
-import bdv.tools.transformation.TransformedSource;
 import bdv.viewer.Source;
 import bdv.viewer.render.AccumulateProjector;
 import bdv.viewer.render.AccumulateProjectorFactory;

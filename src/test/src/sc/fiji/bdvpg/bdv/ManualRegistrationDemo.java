@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.bdv;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.util.RandomAccessibleIntervalSource;
 import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
@@ -57,7 +57,7 @@ public class ManualRegistrationDemo {
         Source source = new RandomAccessibleIntervalSource(rai, Util.getTypeFromInterval(rai), "blobs");
 
         // Creates a BdvHandle
-        BdvHandle bdvHandle = SourceAndConverterServices.getSourceAndConverterDisplayService().getNewBdv();
+        BigDataViewer bdvHandle = SourceAndConverterServices.getSourceAndConverterDisplayService().getNewBdv();
 
         // Creates SourceAndConverter Reference
         SourceAndConverter sacReference = SourceAndConverterUtils.createSourceAndConverter(source);

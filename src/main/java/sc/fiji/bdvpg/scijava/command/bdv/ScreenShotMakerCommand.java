@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.command.bdv;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import ij.ImagePlus;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
@@ -20,7 +20,7 @@ import sc.fiji.bdvpg.scijava.ScijavaBdvDefaults;
 public class ScreenShotMakerCommand implements Command {
 
     @Parameter
-    BdvHandle bdvh;
+    BigDataViewer bdvh;
 
     @Parameter
     public double targetPixelSizeInXY = 1;

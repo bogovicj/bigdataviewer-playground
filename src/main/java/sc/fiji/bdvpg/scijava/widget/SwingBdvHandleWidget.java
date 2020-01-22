@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.widget;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import org.scijava.Priority;
 import org.scijava.object.ObjectService;
 import org.scijava.plugin.Parameter;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 
 @Plugin(type = InputWidget.class, priority = Priority.EXTREMELY_HIGH)
-public class SwingBdvHandleWidget extends SwingInputWidget<BdvHandle> implements
+public class SwingBdvHandleWidget extends SwingInputWidget<BigDataViewer> implements
         BdvHandleWidget<JPanel> {
 
     @Override
@@ -32,11 +32,11 @@ public class SwingBdvHandleWidget extends SwingInputWidget<BdvHandle> implements
 
     @Override
     public boolean supports(final WidgetModel model) {
-        return super.supports(model) && model.isType(BdvHandle.class);
+        return super.supports(model) && model.isType(BigDataViewer.class);
     }
 
     @Override
-    public BdvHandle getValue() {
+    public BigDataViewer getValue() {
         return getSelectedBdvHandle();
     }
 
@@ -45,7 +45,7 @@ public class SwingBdvHandleWidget extends SwingInputWidget<BdvHandle> implements
 
     JList list;
 
-    public BdvHandle getSelectedBdvHandle() {
+    public BigDataViewer getSelectedBdvHandle() {
         return ((RenamableBdvHandle) list.getSelectedValue()).bdvh;
     }
 
@@ -56,7 +56,7 @@ public class SwingBdvHandleWidget extends SwingInputWidget<BdvHandle> implements
     @Override
     public void set(final WidgetModel model) {
         super.set(model);
-        List<RenamableBdvHandle> bdvhs = os.getObjects(BdvHandle.class).stream().map(bdvh -> new RenamableBdvHandle(bdvh)).collect(Collectors.toList());
+        List<RenamableBdvHandle> bdvhs = os.getObjects(BigDataViewer.class).stream().map(bdvh -> new RenamableBdvHandle(bdvh)).collect(Collectors.toList());
         RenamableBdvHandle[] data = bdvhs.toArray(new RenamableBdvHandle[bdvhs.size()]);
         list = new JList(data); //data has type Object[]
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -68,9 +68,9 @@ public class SwingBdvHandleWidget extends SwingInputWidget<BdvHandle> implements
 
     public class RenamableBdvHandle {
 
-        public BdvHandle bdvh;
+        public BigDataViewer bdvh;
 
-        public RenamableBdvHandle(BdvHandle bdvh) {
+        public RenamableBdvHandle(BigDataViewer bdvh) {
             this.bdvh = bdvh;
         }
 

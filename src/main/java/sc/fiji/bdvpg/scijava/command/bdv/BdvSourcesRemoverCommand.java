@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.command.bdv;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.viewer.SourceAndConverter;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
@@ -12,7 +12,7 @@ import sc.fiji.bdvpg.services.SourceAndConverterServices;
 public class BdvSourcesRemoverCommand implements Command {
 
     @Parameter
-    BdvHandle bdvh;
+    BigDataViewer bdvh;
 
     @Parameter
     SourceAndConverter[] srcs_in;

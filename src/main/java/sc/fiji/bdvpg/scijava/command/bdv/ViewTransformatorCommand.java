@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.command.bdv;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import net.imglib2.realtransform.AffineTransform3D;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
@@ -21,7 +21,7 @@ import sc.fiji.bdvpg.scijava.ScijavaBdvDefaults;
 public class ViewTransformatorCommand implements Command {
 
     @Parameter
-    BdvHandle bdvh;
+    BigDataViewer bdvh;
 
     @Parameter
     public Double translateX = 0.0;

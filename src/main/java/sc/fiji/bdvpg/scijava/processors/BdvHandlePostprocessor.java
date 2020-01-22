@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.processors;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import org.scijava.module.Module;
 import org.scijava.module.process.AbstractPostprocessorPlugin;
 import org.scijava.module.process.PostprocessorPlugin;
@@ -38,8 +38,8 @@ public class BdvHandlePostprocessor extends AbstractPostprocessorPlugin {
     public void process(Module module) {
 
         module.getOutputs().forEach((name, object)-> {
-            if (object instanceof BdvHandle) {
-                BdvHandle bdvh = (BdvHandle) object;
+            if (object instanceof BigDataViewer) {
+                BigDataViewer bdvh = (BigDataViewer) object;
                 log.accept("BdvHandle found.");
                 //------------ Register BdvHandle in ObjectService
                 os.addObject(bdvh);

@@ -1,7 +1,6 @@
 package sc.fiji.bdvpg.bdv.projector;
 
-import bdv.util.Bdv;
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.viewer.Source;
 import bdv.viewer.render.AccumulateProjectorFactory;
 import bdv.viewer.render.VolatileProjector;
@@ -14,13 +13,13 @@ import java.util.concurrent.ExecutorService;
 
 public class AccumulateMixedProjectorARGBFactory implements AccumulateProjectorFactory< ARGBType >
 {
-	private BdvHandle bdvHandle;
+	private BigDataViewer bdvHandle;
 
 	public AccumulateMixedProjectorARGBFactory()
 	{
 	}
 
-	public void setBdvHandle( BdvHandle bdvHandle )
+	public void setBdvHandle( BigDataViewer bdvHandle )
 	{
 		this.bdvHandle = bdvHandle;
 	}

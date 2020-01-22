@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import org.scijava.cache.CacheService;
 import org.scijava.object.ObjectService;
 import sc.fiji.bdvpg.scijava.services.SourceAndConverterBdvDisplayService;
@@ -13,8 +13,8 @@ import java.util.List;
 
 public class BdvHandleHelper {
 
-    public static void setBdvHandleCloseOperation( BdvHandle bdvh, CacheService cs, SourceAndConverterBdvDisplayService bdvsds, boolean putWindowOnTop) {
-        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(bdvh.getViewerPanel());
+    public static void setBdvHandleCloseOperation(BigDataViewer bdvh, CacheService cs, SourceAndConverterBdvDisplayService bdvsds, boolean putWindowOnTop) {
+        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(bdvh.getViewer());
 
         topFrame.addWindowListener(new WindowAdapter() {
             @Override
@@ -47,29 +47,29 @@ public class BdvHandleHelper {
         }
     }
 
-    public static void activateWindow(BdvHandle bdvh) {
-        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(bdvh.getViewerPanel());
+    public static void activateWindow(BigDataViewer bdvh) {
+        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(bdvh.getViewer());
         topFrame.toFront();
         topFrame.requestFocus();
     }
 
-    public static void closeWindow(BdvHandle bdvh) {
-        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(bdvh.getViewerPanel());
+    public static void closeWindow(BigDataViewer bdvh) {
+        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(bdvh.getViewer());
         topFrame.dispatchEvent( new WindowEvent(topFrame, WindowEvent.WINDOW_CLOSING));
     }
 
-    public static void setWindowTitle(BdvHandle bdvh, String title) {
-        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(bdvh.getViewerPanel());
+    public static void setWindowTitle(BigDataViewer bdvh, String title) {
+        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(bdvh.getViewer());
         topFrame.setTitle(title);
     }
 
-    public static String getWindowTitle(BdvHandle bdvh) {
-        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(bdvh.getViewerPanel());
+    public static String getWindowTitle(BigDataViewer bdvh) {
+        JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(bdvh.getViewer());
         return topFrame.getTitle();
     }
 
     public static String getUniqueWindowTitle(ObjectService os, String iniTitle) {
-        List<BdvHandle> bdvs = os.getObjects(BdvHandle.class);
+        List<BigDataViewer> bdvs = os.getObjects(BigDataViewer.class);
         boolean duplicateExist;
         String uniqueTitle = iniTitle;
         duplicateExist = bdvs.stream().filter(bdv ->

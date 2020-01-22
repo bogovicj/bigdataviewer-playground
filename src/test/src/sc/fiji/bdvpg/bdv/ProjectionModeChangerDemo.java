@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.bdv;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.viewer.SourceAndConverter;
 import net.imagej.ImageJ;
 import sc.fiji.bdvpg.bdv.navigate.ViewerTransformAdjuster;
@@ -21,7 +21,7 @@ public class ProjectionModeChangerDemo
 		ij.ui().showUI();
 
 		// Gets active BdvHandle instance
-		BdvHandle bdv = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
+		BigDataViewer bdv = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
 
 		// Import SpimData
 		new SpimDataFromXmlImporter("src/test/resources/mri-stack.xml").run();

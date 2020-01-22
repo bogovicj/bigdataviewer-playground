@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.bdv.navigate;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.ui.TransformListener;
 import java.util.Map;
@@ -16,16 +16,16 @@ import java.util.Map;
 
 public class ViewerTransformSyncStopper implements Runnable {
 
-    Map<BdvHandle, TransformListener<AffineTransform3D>> bdvHandleToTransformListener;
+    Map<BigDataViewer, TransformListener<AffineTransform3D>> bdvHandleToTransformListener;
 
-    public ViewerTransformSyncStopper(Map<BdvHandle, TransformListener<AffineTransform3D>> bdvHandleToTransformListener) {
+    public ViewerTransformSyncStopper(Map<BigDataViewer, TransformListener<AffineTransform3D>> bdvHandleToTransformListener) {
        this.bdvHandleToTransformListener = bdvHandleToTransformListener;
     }
 
     @Override
     public void run() {
         bdvHandleToTransformListener.forEach((bdvHandle, listener) -> {
-            bdvHandle.getViewerPanel().removeTransformListener(listener);
+            bdvHandle.getViewer().removeTransformListener(listener);
         });
     }
 

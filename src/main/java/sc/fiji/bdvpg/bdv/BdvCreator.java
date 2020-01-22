@@ -1,9 +1,6 @@
 package sc.fiji.bdvpg.bdv;
 
-import bdv.util.BdvFunctions;
-import bdv.util.BdvHandle;
-import bdv.util.BdvOptions;
-import bdv.util.BdvStackSource;
+import bdv.BigDataViewer;
 import bdv.viewer.Interpolation;
 import net.imglib2.img.array.ArrayImg;
 import net.imglib2.img.array.ArrayImgs;
@@ -11,12 +8,13 @@ import net.imglib2.realtransform.AffineTransform3D;
 
 import java.util.function.Supplier;
 
-public class BdvCreator implements Runnable, Supplier<BdvHandle>
+public class BdvCreator implements Runnable, Supplier<BigDataViewer>
 {
-	private BdvOptions bdvOptions;
+	//private BdvOptions bdvOptions;
 	private boolean interpolate;
-	private BdvHandle bdvHandle;
+	private BigDataViewer bdvHandle;
 
+	/*
 	public BdvCreator( )
 	{
 		this.bdvOptions = BdvOptions.options();
@@ -27,11 +25,10 @@ public class BdvCreator implements Runnable, Supplier<BdvHandle>
 	{
 		this.bdvOptions = bdvOptions;
 		this.interpolate = false;
-	}
+	}*/
 
-	public BdvCreator( BdvOptions bdvOptions, boolean interpolate )
+	public BdvCreator(  boolean interpolate )
 	{
-		this.bdvOptions = bdvOptions;
 		this.interpolate = interpolate;
 	}
 
@@ -47,7 +44,7 @@ public class BdvCreator implements Runnable, Supplier<BdvHandle>
 	 */
 	private void createEmptyBdv()
 	{
-		ArrayImg dummyImg = ArrayImgs.bytes(2, 2, 2);
+		/*ArrayImg dummyImg = ArrayImgs.bytes(2, 2, 2);
 
 		bdvOptions = bdvOptions.sourceTransform( new AffineTransform3D() );
 
@@ -55,12 +52,15 @@ public class BdvCreator implements Runnable, Supplier<BdvHandle>
 
 		bdvHandle = bss.getBdvHandle();
 
-		if ( interpolate ) bdvHandle.getViewerPanel().setInterpolation( Interpolation.NLINEAR );
+		if ( interpolate ) bdvHandle.getViewerPanel().setInterpolation( Interpolation.NLINEAR );*/
 
+		bdvHandle = BigDataViewer.open(null,null,1,null,"Title",null,null);
+
+		//bdvHandle.getViewer().state().re
 		//bss.removeFromBdv();
 	}
 
-	public BdvHandle get()
+	public BigDataViewer get()
 	{
 		if ( bdvHandle == null ) run();
 

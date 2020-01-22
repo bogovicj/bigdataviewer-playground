@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.bdv;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.viewer.Interpolation;
 import bdv.viewer.Source;
 import ij.CompositeImage;
@@ -41,13 +41,13 @@ import static sc.fiji.bdvpg.bdv.BdvUtils.*;
 public class ScreenShotMaker {
 
     CompositeImage screenShot = null;
-    private BdvHandle bdvHandle;
+    private BigDataViewer bdvHandle;
     private double physicalPixelSpacingInXY = 1;
     private String physicalUnit = "Pixels";
     private boolean sourceInteractionWithViewerPlaneOnly2D = true;
 
 
-    public ScreenShotMaker(BdvHandle bdvHandle) {
+    public ScreenShotMaker(BigDataViewer bdvHandle) {
         this.bdvHandle = bdvHandle;
     }
 
@@ -75,20 +75,20 @@ public class ScreenShotMaker {
     }
 
     private static < R extends RealType< R >> CompositeImage captureView(
-            BdvHandle bdv,
+            BigDataViewer bdv,
             double outputVoxelSpacing,
             String voxelUnits,
             boolean checkSourceIntersectionWithViewerPlaneOnlyIn2D )
     {
         final AffineTransform3D viewerTransform = new AffineTransform3D();
-        bdv.getViewerPanel().getState().getViewerTransform( viewerTransform );
+        bdv.getViewer().state().getViewerTransform( viewerTransform );
 
         final double viewerVoxelSpacing = getViewerVoxelSpacing( bdv );
 
         double dxy = outputVoxelSpacing / viewerVoxelSpacing;
 
-        final int w = getBdvWindowWidth( bdv );
-        final int h = getBdvWindowHeight( bdv );
+        final int w = bdv.getViewer().getWidth();
+        final int h = bdv.getViewer().getHeight();
 
         final long captureWidth = ( long ) Math.ceil( w / dxy );
         final long captureHeight = ( long ) Math.ceil( h / dxy );
@@ -99,9 +99,10 @@ public class ScreenShotMaker {
         final ArrayList< Boolean > isSegmentations = new ArrayList<>();
         final ArrayList< double[] > displayRanges = new ArrayList<>();
 
-        final List< Integer > sourceIndices = getVisibleSourceIndices( bdv );
+        // TODO : replace indexing logic
+        final List< Integer > sourceIndices = bdv.getViewer().getState().getVisibleSourceIndices();
 
-        final int t = bdv.getViewerPanel().getState().getCurrentTimepoint();
+        final int t = bdv.getViewer().state().getCurrentTimepoint();
 
         for ( int sourceIndex : sourceIndices )
         {

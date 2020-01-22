@@ -2,7 +2,6 @@ package bdv.util;
 
 import bdv.viewer.Interpolation;
 import bdv.viewer.Source;
-import mpicbg.spim.data.sequence.VoxelDimensions;
 import net.imglib2.RandomAccessible;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.RealRandomAccessible;
@@ -25,7 +24,7 @@ public class ResampledSource< T extends NumericType<T> & NativeType<T>> implemen
 
     Source<?> srcResamplingModel;
 
-    //protected final DefaultInterpolators< T > interpolators = new DefaultInterpolators<>();
+    protected final DefaultInterpolators< T > interpolators = new DefaultInterpolators<>();
 
     boolean reuseMipMaps;
 
@@ -105,9 +104,16 @@ public class ResampledSource< T extends NumericType<T> & NativeType<T>> implemen
     }
 
     @Override
+    public mpicbg.spim.data.sequence.VoxelDimensions getVoxelDimensions() {
+        return null;
+    }
+
+    /*
+    @Override
     public VoxelDimensions getVoxelDimensions() {
         return srcResamplingModel.getVoxelDimensions();
     }
+    */
 
     @Override
     public int getNumMipmapLevels() {

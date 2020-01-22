@@ -1,7 +1,7 @@
 package sc.fiji.bdvpg.bdv.navigate;
 
-import bdv.util.BdvHandle;
-import bdv.util.RandomAccessibleIntervalSource;
+import bdv.BigDataViewer;
+//import bdv.util.RandomAccessibleIntervalSource;
 import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
 import ij.IJ;
@@ -41,7 +41,7 @@ public class LogMousePositionDemo {
         SourceAndConverter sac = SourceAndConverterUtils.createSourceAndConverter(source);
 
         // Creates a BdvHandle
-        BdvHandle bdvHandle = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
+        BigDataViewer bdvHandle = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
 
         // Show the sourceandconverter
         SourceAndConverterServices.getSourceAndConverterDisplayService().show(bdvHandle, sac);

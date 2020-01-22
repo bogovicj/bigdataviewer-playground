@@ -2,13 +2,12 @@ package sc.fiji.bdvpg.bdv;
 
 import bdv.AbstractSpimSource;
 import bdv.tools.transformation.TransformedSource;
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.viewer.SourceAndConverter;
 import mpicbg.spim.data.registration.ViewRegistration;
 import mpicbg.spim.data.registration.ViewTransform;
 import mpicbg.spim.data.registration.ViewTransformAffine;
 import net.imglib2.realtransform.AffineTransform3D;
-import sc.fiji.bdvpg.scijava.services.SourceAndConverterBdvDisplayService;
 import sc.fiji.bdvpg.scijava.services.SourceAndConverterService;
 import sc.fiji.bdvpg.services.SourceAndConverterServices;
 import sc.fiji.bdvpg.sourceandconverter.transform.SourceAffineTransformer;
@@ -108,9 +107,9 @@ public class ManualRegistrationStopper implements Runnable {
                         .getSacToMetadata().get(sac).get(SPIM_DATA_INFO));
 
         // TODO : find a way to pass the ref of starter into this function ? but static looks great...
-        BdvHandle bdvHandle = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
+        BigDataViewer bdvHandle = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
 
-        int timePoint = bdvHandle.getViewerPanel().getState().getCurrentTimepoint();
+        int timePoint = bdvHandle.getViewer().state().getCurrentTimepoint();
 
         ViewRegistration vr = sdi.asd.getViewRegistrations().getViewRegistration(timePoint,sdi.setupId);
 
@@ -166,9 +165,9 @@ public class ManualRegistrationStopper implements Runnable {
                         .getSacToMetadata().get(sac).get(SPIM_DATA_INFO));
 
         // TODO : find a way to pass the ref of starter into this function ? but static looks great...
-        BdvHandle bdvHandle = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
+        BigDataViewer bdvHandle = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
 
-        int timePoint = bdvHandle.getViewerPanel().getState().getCurrentTimepoint();
+        int timePoint = bdvHandle.getViewer().state().getCurrentTimepoint();
 
         ViewTransform newvt = new ViewTransformAffine("Manual transform", affineTransform3D);
 
@@ -250,7 +249,7 @@ public class ManualRegistrationStopper implements Runnable {
         AffineTransform3D transform3D = this.starter.getCurrentTransform().copy();
 
         // Stops BdvHandle listener
-        this.starter.getBdvHandle().getViewerPanel().removeTransformListener(starter.getListener());
+        this.starter.getBdvHandle().getViewer().removeTransformListener(starter.getListener());
 
         // Removes temporary TransformedSourceAndConverter - in two times for performance issue
         List<SourceAndConverter> tempSacs = starter.getTransformedSourceAndConverterDisplayed();

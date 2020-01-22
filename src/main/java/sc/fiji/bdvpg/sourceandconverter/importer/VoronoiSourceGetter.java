@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.sourceandconverter.importer;
 
-import bdv.util.RandomAccessibleIntervalSource;
+//import bdv.util.RandomAccessibleIntervalSource;
 import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
 import mpicbg.spim.data.sequence.VoxelDimensions;
@@ -66,7 +66,8 @@ public class VoronoiSourceGetter implements Runnable, Supplier<SourceAndConverte
             }
         };
 
-        Source s = new RandomAccessibleIntervalSource<>( voronoi, new FloatType(), new AffineTransform3D(), "Voronoi_"+numPts+" Pts_["+imgSize[0]+","+imgSize[1]+","+imgSize[2]+"]" );
+        // TODO : fix
+        Source s = null; //new RandomAccessibleIntervalSource<>( voronoi, new FloatType(), new AffineTransform3D(), "Voronoi_"+numPts+" Pts_["+imgSize[0]+","+imgSize[1]+","+imgSize[2]+"]" );
 
         return SourceAndConverterUtils.createSourceAndConverter(s);
 

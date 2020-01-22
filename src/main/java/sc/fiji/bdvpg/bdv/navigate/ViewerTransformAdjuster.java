@@ -1,21 +1,20 @@
 package sc.fiji.bdvpg.bdv.navigate;
 
+import bdv.BigDataViewer;
 import bdv.util.Affine3DHelpers;
-import bdv.util.BdvHandle;
-import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
-import bdv.viewer.state.ViewerState;
+import bdv.viewer.SynchronizedViewerState;
 import net.imglib2.Interval;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.util.LinAlgHelpers;
 
 public class ViewerTransformAdjuster implements Runnable
 {
-	private final BdvHandle bdvHandle;
+	private final BigDataViewer bdvHandle;
 	private final SourceAndConverter source;
 	private boolean zoomedIn = false; // TODO: what's the point of this?
 
-	public ViewerTransformAdjuster( BdvHandle bdvHandle, SourceAndConverter source )
+	public ViewerTransformAdjuster(BigDataViewer bdvHandle, SourceAndConverter source )
 	{
 		this.bdvHandle = bdvHandle;
 		this.source = source;
@@ -24,7 +23,7 @@ public class ViewerTransformAdjuster implements Runnable
 	public void run()
 	{
 		final AffineTransform3D transform = getTransform();
-		bdvHandle.getViewerPanel().setCurrentViewerTransform( transform );
+		bdvHandle.getViewer().setCurrentViewerTransform( transform );
 	}
 
 	/**
@@ -39,10 +38,10 @@ public class ViewerTransformAdjuster implements Runnable
 	 */
 	public AffineTransform3D getTransform( )
 	{
-		final ViewerState state = bdvHandle.getViewerPanel().getState();
+		final SynchronizedViewerState state = bdvHandle.getViewer().state();
 
-		final int viewerWidth = bdvHandle.getBdvHandle().getViewerPanel().getWidth();
-		final int viewerHeight = bdvHandle.getBdvHandle().getViewerPanel().getHeight();
+		final int viewerWidth = bdvHandle.getViewer().getWidth();
+		final int viewerHeight = bdvHandle.getViewer().getHeight();
 
 		final double cX = viewerWidth / 2.0;
 		final double cY = viewerHeight / 2.0;

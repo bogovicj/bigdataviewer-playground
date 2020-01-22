@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.bdv.navigate;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.util.RandomAccessibleIntervalSource;
 import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
@@ -44,13 +44,13 @@ public class ViewTransformSynchronizationDemo {
         SourceAndConverter sac = SourceAndConverterUtils.createSourceAndConverter(source);
 
         // Creates a BdvHandle
-        BdvHandle bdvHandle1 = SourceAndConverterServices.getSourceAndConverterDisplayService().getNewBdv();
+        BigDataViewer bdvHandle1 = SourceAndConverterServices.getSourceAndConverterDisplayService().getNewBdv();
         // Creates a BdvHandle
-        BdvHandle bdvHandle2 = SourceAndConverterServices.getSourceAndConverterDisplayService().getNewBdv();
+        BigDataViewer bdvHandle2 = SourceAndConverterServices.getSourceAndConverterDisplayService().getNewBdv();
         // Creates a BdvHandles
-        BdvHandle bdvHandle3 = SourceAndConverterServices.getSourceAndConverterDisplayService().getNewBdv();
+        BigDataViewer bdvHandle3 = SourceAndConverterServices.getSourceAndConverterDisplayService().getNewBdv();
 
-        BdvHandle[] bdvhs = new BdvHandle[]{bdvHandle1,bdvHandle2,bdvHandle3};
+        BigDataViewer[] bdvhs = new BigDataViewer[]{bdvHandle1,bdvHandle2,bdvHandle3};
 
         ViewerTransformSyncStarter syncstart = new ViewerTransformSyncStarter(bdvhs);
         ViewerTransformSyncStopper syncstop = new ViewerTransformSyncStopper(syncstart.getSynchronizers());
@@ -58,7 +58,7 @@ public class ViewTransformSynchronizationDemo {
         syncstart.run();
         isSynchronizing = true;
 
-        for (BdvHandle bdvHandle:bdvhs) {
+        for (BigDataViewer bdvHandle:bdvhs) {
             // Show the sourceandconverter
             SourceAndConverterServices.getSourceAndConverterDisplayService().show(bdvHandle, sac);
 

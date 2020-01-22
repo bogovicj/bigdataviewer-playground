@@ -1,6 +1,6 @@
 package sc.fiji.bdvpg.scijava.command.bdv;
 
-import bdv.util.BdvHandle;
+import bdv.BigDataViewer;
 import bdv.viewer.SourceAndConverter;
 import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
@@ -14,7 +14,7 @@ import sc.fiji.bdvpg.sourceandconverter.display.BrightnessAutoAdjuster;
 public class BdvSourcesAdderCommand implements Command {
 
     @Parameter
-    BdvHandle bdvh;
+    BigDataViewer bdvh;
 
     @Parameter
     SourceAndConverter[] sacs;
@@ -31,7 +31,7 @@ public class BdvSourcesAdderCommand implements Command {
         SourceAndConverterServices.getSourceAndConverterDisplayService().show(bdvh, sacs);
         if (autoContrast) {
             for (SourceAndConverter sac : sacs) {
-                int timepoint = bdvh.getViewerPanel().getState().getCurrentTimepoint();
+                int timepoint = bdvh.getViewer().state().getCurrentTimepoint();
                 new BrightnessAutoAdjuster(sac, timepoint).run();
             }
         }
