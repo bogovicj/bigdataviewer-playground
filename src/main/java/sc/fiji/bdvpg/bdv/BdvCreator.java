@@ -1,11 +1,21 @@
 package sc.fiji.bdvpg.bdv;
 
 import bdv.BigDataViewer;
-import bdv.viewer.Interpolation;
+import bdv.tools.brightness.ConverterSetup;
+import bdv.util.RandomAccessibleIntervalSource;
+import bdv.viewer.*;
+import ij.IJ;
+import ij.ImagePlus;
+import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.array.ArrayImg;
 import net.imglib2.img.array.ArrayImgs;
+import net.imglib2.img.display.imagej.ImageJFunctions;
 import net.imglib2.realtransform.AffineTransform3D;
+import net.imglib2.util.Util;
+import net.imglib2.view.Views;
+import sc.fiji.bdvpg.sourceandconverter.SourceAndConverterUtils;
 
+import java.util.ArrayList;
 import java.util.function.Supplier;
 
 public class BdvCreator implements Runnable, Supplier<BigDataViewer>
@@ -54,8 +64,26 @@ public class BdvCreator implements Runnable, Supplier<BigDataViewer>
 
 		if ( interpolate ) bdvHandle.getViewerPanel().setInterpolation( Interpolation.NLINEAR );*/
 
-		bdvHandle = BigDataViewer.open(null,null,1,null,"Title",null,null);
+		ImagePlus imp = IJ.openImage("src/test/resources/blobs.tif");
+		RandomAccessibleInterval rai = ImageJFunctions.wrapReal(imp);
+		// Adds a third dimension because Bdv needs 3D
+		rai = Views.addDimension( rai, 0, 0 );
 
+		// Makes Bdv Source
+		Source source = new RandomAccessibleIntervalSource(rai, Util.getTypeFromInterval(rai), "blobs");
+		SourceAndConverter sac = SourceAndConverterUtils.createSourceAndConverter(source);
+
+
+		ArrayList<SourceAndConverter<?>> sacList = new ArrayList<>();
+		sacList.add(sac);
+
+		ArrayList<ConverterSetup> csList = new ArrayList<>();
+		ConverterSetup cs = SourceAndConverterUtils.createConverterSetup(sac, () -> {});
+		csList.add(cs);
+
+		bdvHandle = BigDataViewer.open(csList,sacList,1,null,"Title",null, ViewerOptions.options());
+
+		cs.setupChangeListeners().add((converterSetup) -> bdvHandle.getViewer().requestRepaint());
 		//bdvHandle.getViewer().state().re
 		//bss.removeFromBdv();
 	}

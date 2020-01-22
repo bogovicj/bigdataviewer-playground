@@ -55,11 +55,6 @@ public class ARGBColorConverterSetup implements ConverterSetup
     }
 
     @Override
-    public Listeners<SetupChangeListener> setupChangeListeners() {
-        return null;
-    }
-
-    @Override
     public int getSetupId()
     {
         return 0;
@@ -83,9 +78,16 @@ public class ARGBColorConverterSetup implements ConverterSetup
         return converters.get( 0 ).getColor();
     }
 
+    //@Override
+    //public void setViewer( final RequestRepaint viewer )
+    /*{
+        setupChangeListeners().add( s -> viewer.requestRepaint() );
+    }*/
+
+    private final Listeners.List< SetupChangeListener > listeners = new Listeners.SynchronizedList<>();
+
     @Override
-    public void setViewer( final RequestRepaint viewer )
-    {
-        this.viewer = viewer;
+    public Listeners<SetupChangeListener> setupChangeListeners() {
+        return listeners;
     }
 }

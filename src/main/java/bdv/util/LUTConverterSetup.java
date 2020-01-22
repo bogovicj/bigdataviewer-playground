@@ -64,6 +64,14 @@ public class LUTConverterSetup implements ConverterSetup
 
      */
 
+
+    private final Listeners.List< SetupChangeListener > listeners = new Listeners.SynchronizedList<>();
+
+    @Override
+    public Listeners<SetupChangeListener> setupChangeListeners() {
+        return listeners;
+    }
+
     @Override
     public int getSetupId()
     {
