@@ -23,6 +23,7 @@ public class ProjectionModeChangerDemo
 		// Gets active BdvHandle instance
 		BigDataViewer bdv = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
 
+		/*
 		// Import SpimData
 		new SpimDataFromXmlImporter("src/test/resources/mri-stack.xml").run();
 		new SpimDataFromXmlImporter("src/test/resources/mri-stack-shiftedX.xml").run();
@@ -43,5 +44,7 @@ public class ProjectionModeChangerDemo
 		sacs[ 1 ] = sourceAndConverters.get( 1 );
 
 		new ProjectionModeChanger( sacs, Projection.PROJECTION_MODE_AVG ).run();
+		*/
+
 	}
 }

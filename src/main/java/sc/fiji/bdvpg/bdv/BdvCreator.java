@@ -1,6 +1,8 @@
 package sc.fiji.bdvpg.bdv;
 
 import bdv.BigDataViewer;
+import bdv.cache.CacheControl;
+import bdv.export.ProgressWriterConsole;
 import bdv.tools.brightness.ConverterSetup;
 import bdv.util.RandomAccessibleIntervalSource;
 import bdv.viewer.*;
@@ -81,9 +83,9 @@ public class BdvCreator implements Runnable, Supplier<BigDataViewer>
 		ConverterSetup cs = SourceAndConverterUtils.createConverterSetup(sac, () -> {});
 		csList.add(cs);
 
-		bdvHandle = BigDataViewer.open(csList,sacList,1,null,"Title",null, ViewerOptions.options());
+		bdvHandle = BigDataViewer.open(csList,sacList,1,new CacheControl.Dummy(),"Title",new ProgressWriterConsole(), ViewerOptions.options());
 
-		cs.setupChangeListeners().add((converterSetup) -> bdvHandle.getViewer().requestRepaint());
+		cs.setupChangeListeners().add((converterSetup) -> {});//bdvHandle.getViewer().requestRepaint());
 		//bdvHandle.getViewer().state().re
 		//bss.removeFromBdv();
 	}
