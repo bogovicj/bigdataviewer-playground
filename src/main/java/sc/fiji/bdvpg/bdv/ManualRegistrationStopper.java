@@ -204,7 +204,15 @@ public class ManualRegistrationStopper implements Runnable {
      */
     public static SourceAndConverter mutate(AffineTransform3D affineTransform3D, SourceAndConverter sac) {
         if (sac.getSpimSource() instanceof AbstractSpimSource) {
-            return mutateLastSpimdataTransformation(affineTransform3D, sac);
+            if (SourceAndConverterServices.getSourceAndConverterService().getMetadata(sac,SPIM_DATA_INFO)!=null) {
+                return mutateLastSpimdataTransformation(affineTransform3D, sac);
+            } else {
+                if (sac.getSpimSource() instanceof TransformedSource) {
+                    return mutateTransformedSourceAndConverter(affineTransform3D,sac);
+                } else {
+                    return createNewTransformedSourceAndConverter(affineTransform3D,sac);
+                }
+            }
         } else if (sac.getSpimSource() instanceof TransformedSource) {
             return mutateTransformedSourceAndConverter(affineTransform3D,sac);
         } else {
@@ -221,7 +229,11 @@ public class ManualRegistrationStopper implements Runnable {
      */
     public static SourceAndConverter append(AffineTransform3D affineTransform3D, SourceAndConverter sac) {
         if (sac.getSpimSource() instanceof AbstractSpimSource) {
-            return appendNewSpimdataTransformation(affineTransform3D, sac);
+            if (SourceAndConverterServices.getSourceAndConverterService().getMetadata(sac,SPIM_DATA_INFO)!=null) {
+                return appendNewSpimdataTransformation(affineTransform3D, sac);
+            } else {
+                return createNewTransformedSourceAndConverter(affineTransform3D,sac);
+            }
         } else {
             return createNewTransformedSourceAndConverter(affineTransform3D,sac);
         }
