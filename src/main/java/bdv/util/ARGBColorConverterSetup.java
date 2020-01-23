@@ -14,7 +14,7 @@ public class ARGBColorConverterSetup implements ConverterSetup
 
     protected final List<ColorConverter> converters;
 
-    protected RequestRepaint viewer;
+    //protected RequestRepaint viewer;
 
     public ARGBColorConverterSetup( final ColorConverter ... converters )
     {
@@ -24,7 +24,7 @@ public class ARGBColorConverterSetup implements ConverterSetup
     public ARGBColorConverterSetup( final List< ColorConverter > converters )
     {
         this.converters = converters;
-        this.viewer = null;
+        //this.viewer = null;
     }
 
     @Override
@@ -35,8 +35,10 @@ public class ARGBColorConverterSetup implements ConverterSetup
             converter.setMin( min );
             converter.setMax( max );
         }
-        if ( viewer != null )
-            viewer.requestRepaint();
+
+        listeners.list.forEach(scl -> scl.setupParametersChanged(this));
+        /*if ( viewer != null )
+            viewer.requestRepaint();*/
     }
 
     @Override
@@ -44,8 +46,9 @@ public class ARGBColorConverterSetup implements ConverterSetup
     {
         for ( final ColorConverter converter : converters )
             converter.setColor( color );
-        if ( viewer != null )
-            viewer.requestRepaint();
+        listeners.list.forEach(scl -> scl.setupParametersChanged(this));
+        /*if ( viewer != null )
+            viewer.requestRepaint();*/
     }
 
     @Override

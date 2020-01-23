@@ -23,13 +23,15 @@ public class ProjectionModeChangerDemo
 		// Gets active BdvHandle instance
 		BigDataViewer bdv = SourceAndConverterServices.getSourceAndConverterDisplayService().getActiveBdv();
 
-		/*
+
 		// Import SpimData
 		new SpimDataFromXmlImporter("src/test/resources/mri-stack.xml").run();
 		new SpimDataFromXmlImporter("src/test/resources/mri-stack-shiftedX.xml").run();
 		new SpimDataFromXmlImporter("src/test/resources/mri-stack-shiftedY.xml").run();
 
+
 		final List< SourceAndConverter > sourceAndConverters = SourceAndConverterServices.getSourceAndConverterService().getSourceAndConverters();
+
 
 		// Show all three sacs
 		sourceAndConverters.forEach( sac -> {
@@ -38,13 +40,15 @@ public class ProjectionModeChangerDemo
 			new BrightnessAutoAdjuster(sac, 0).run();
 		});
 
+		SourceAndConverterServices.getSourceAndConverterDisplayService().show(bdv, sourceAndConverters.get(0));
+
+
 		// For the first two, change the projection mode to avg (default is sum, if it is not set)
 		final SourceAndConverter[] sacs = new SourceAndConverter[ 2 ];
 		sacs[ 0 ] = sourceAndConverters.get( 0 );
 		sacs[ 1 ] = sourceAndConverters.get( 1 );
 
 		new ProjectionModeChanger( sacs, Projection.PROJECTION_MODE_AVG ).run();
-		*/
 
 	}
 }

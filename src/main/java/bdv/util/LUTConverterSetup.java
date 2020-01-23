@@ -1,21 +1,17 @@
 package bdv.util;
 
 import bdv.tools.brightness.ConverterSetup;
-import bdv.viewer.RequestRepaint;
-import net.imglib2.converter.Converter;
 import net.imglib2.converter.RealLUTConverter;
-import net.imglib2.display.AbstractLinearRange;
-import net.imglib2.display.ColorConverter;
 import net.imglib2.type.numeric.ARGBType;
-import org.scijava.listeners.Listeners;
 
 import java.util.Arrays;
 import java.util.List;
+import org.scijava.listeners.*;
 
 public class LUTConverterSetup implements ConverterSetup
 {
 
-    protected RequestRepaint viewer;
+    //protected RequestRepaint viewer;
 
     protected final List<RealLUTConverter> converters;
     //protected RealLUTConverter converter;
@@ -28,8 +24,8 @@ public class LUTConverterSetup implements ConverterSetup
     public LUTConverterSetup(final List< RealLUTConverter > converters  )
     {
         this.converters = converters;
-        this.viewer = null;
-        AbstractLinearRange alr;
+        //this.viewer = null;
+        //AbstractLinearRange alr;
     }
 
 
@@ -41,8 +37,8 @@ public class LUTConverterSetup implements ConverterSetup
             converter.setMin(min);
             converter.setMax(max);
         }
-        if ( viewer != null )
-            viewer.requestRepaint();
+        //if ( viewer != null )
+        //    viewer.requestRepaint();
     }
 
     @Override
@@ -96,9 +92,9 @@ public class LUTConverterSetup implements ConverterSetup
         return null;
     }
 
-    @Override
+    /*@Override
     public void setViewer( final RequestRepaint viewer )
     {
         this.viewer = viewer;
-    }
+    }*/
 }
