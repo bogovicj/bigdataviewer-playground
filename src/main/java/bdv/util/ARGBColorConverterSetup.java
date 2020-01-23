@@ -42,6 +42,7 @@ public class ARGBColorConverterSetup implements ConverterSetup
     {
         for ( final ColorConverter converter : converters )
             converter.setColor( color );
+
         listeners.list.forEach(scl -> scl.setupParametersChanged(this));
     }
 

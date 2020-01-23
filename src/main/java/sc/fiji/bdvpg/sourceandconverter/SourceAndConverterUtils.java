@@ -226,11 +226,22 @@ public class SourceAndConverterUtils {
     }
 
     public static ConverterSetup createConverterSetup(SourceAndConverter sac) {
-        return  createConverterSetup(sac,0);
+        return  createConverterSetup(sac,-1);
     }
 
     public static ConverterSetup createConverterSetup(SourceAndConverter sac, int legacyId) {
-        return BigDataViewer.createConverterSetup(sac, legacyId);
+        //return BigDataViewer.createConverterSetup(sac, legacyId);
+        ConverterSetup setup;
+        if (sac.getSpimSource().getType() instanceof RealType) {
+            setup = createConverterSetupRealType(sac);
+        } else if (sac.getSpimSource().getType() instanceof ARGBType) {
+            setup = createConverterSetupARGBType(sac);
+        } else {
+            errlog.accept("Cannot create convertersetup for Source of type "+sac.getSpimSource().getType().getClass().getSimpleName());
+            setup = null;
+        }
+        //setup.setViewer(() -> requestRepaint.run());
+        return setup;
     }
 
     /**

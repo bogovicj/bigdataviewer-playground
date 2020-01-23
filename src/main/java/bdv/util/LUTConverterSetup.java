@@ -31,6 +31,8 @@ public class LUTConverterSetup implements ConverterSetup
             converter.setMin(min);
             converter.setMax(max);
         }
+
+        listeners.list.forEach(scl -> scl.setupParametersChanged(this));
     }
 
     @Override

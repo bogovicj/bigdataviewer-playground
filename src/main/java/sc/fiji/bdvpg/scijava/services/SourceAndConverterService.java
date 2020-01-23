@@ -1,6 +1,5 @@
 package sc.fiji.bdvpg.scijava.services;
 
-import bdv.tools.transformation.TransformedSource;
 import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
 import mpicbg.spim.data.generic.AbstractSpimData;
