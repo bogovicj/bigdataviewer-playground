@@ -1,5 +1,6 @@
 package sc.fiji.bdvpg.sourceandconverter;
 
+import bdv.BigDataViewer;
 import bdv.SpimSource;
 import bdv.ViewerImgLoader;
 import bdv.VolatileSpimSource;
@@ -224,18 +225,12 @@ public class SourceAndConverterUtils {
         }
     }
 
-    public static ConverterSetup createConverterSetup(SourceAndConverter sac){//}, Runnable requestRepaint) {
-        ConverterSetup setup;
-        if (sac.getSpimSource().getType() instanceof RealType) {
-            setup = createConverterSetupRealType(sac);
-        } else if (sac.getSpimSource().getType() instanceof ARGBType) {
-            setup = createConverterSetupARGBType(sac);
-        } else {
-            errlog.accept("Cannot create convertersetup for Source of type "+sac.getSpimSource().getType().getClass().getSimpleName());
-            setup = null;
-        }
-        //setup.setViewer(() -> requestRepaint.run());
-        return setup;
+    public static ConverterSetup createConverterSetup(SourceAndConverter sac) {
+        return  createConverterSetup(sac,0);
+    }
+
+    public static ConverterSetup createConverterSetup(SourceAndConverter sac, int legacyId) {
+        return BigDataViewer.createConverterSetup(sac, legacyId);
     }
 
     /**

@@ -24,9 +24,7 @@ public class ViewerTransformSyncStopper implements Runnable {
 
     @Override
     public void run() {
-        bdvHandleToTransformListener.forEach((bdvHandle, listener) -> {
-            bdvHandle.getViewer().removeTransformListener(listener);
-        });
+        bdvHandleToTransformListener.forEach((bdvHandle, listener) -> bdvHandle.getViewer().removeTransformListener(listener));
     }
 
 

@@ -1,7 +1,6 @@
 package bdv.util;
 
 import bdv.tools.brightness.ConverterSetup;
-import bdv.viewer.RequestRepaint;
 import net.imglib2.display.ColorConverter;
 import net.imglib2.type.numeric.ARGBType;
 import org.scijava.listeners.Listeners;
@@ -14,7 +13,7 @@ public class ARGBColorConverterSetup implements ConverterSetup
 
     protected final List<ColorConverter> converters;
 
-    //protected RequestRepaint viewer;
+    private final Listeners.List< SetupChangeListener > listeners = new Listeners.SynchronizedList<>();
 
     public ARGBColorConverterSetup( final ColorConverter ... converters )
     {
@@ -24,7 +23,6 @@ public class ARGBColorConverterSetup implements ConverterSetup
     public ARGBColorConverterSetup( final List< ColorConverter > converters )
     {
         this.converters = converters;
-        //this.viewer = null;
     }
 
     @Override
@@ -37,8 +35,6 @@ public class ARGBColorConverterSetup implements ConverterSetup
         }
 
         listeners.list.forEach(scl -> scl.setupParametersChanged(this));
-        /*if ( viewer != null )
-            viewer.requestRepaint();*/
     }
 
     @Override
@@ -47,8 +43,6 @@ public class ARGBColorConverterSetup implements ConverterSetup
         for ( final ColorConverter converter : converters )
             converter.setColor( color );
         listeners.list.forEach(scl -> scl.setupParametersChanged(this));
-        /*if ( viewer != null )
-            viewer.requestRepaint();*/
     }
 
     @Override
@@ -80,14 +74,6 @@ public class ARGBColorConverterSetup implements ConverterSetup
     {
         return converters.get( 0 ).getColor();
     }
-
-    //@Override
-    //public void setViewer( final RequestRepaint viewer )
-    /*{
-        setupChangeListeners().add( s -> viewer.requestRepaint() );
-    }*/
-
-    private final Listeners.List< SetupChangeListener > listeners = new Listeners.SynchronizedList<>();
 
     @Override
     public Listeners<SetupChangeListener> setupChangeListeners() {

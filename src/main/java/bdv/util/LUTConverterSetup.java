@@ -10,11 +10,9 @@ import org.scijava.listeners.*;
 
 public class LUTConverterSetup implements ConverterSetup
 {
-
-    //protected RequestRepaint viewer;
-
     protected final List<RealLUTConverter> converters;
-    //protected RealLUTConverter converter;
+
+    private final Listeners.List< SetupChangeListener > listeners = new Listeners.SynchronizedList<>();
 
     public LUTConverterSetup(final RealLUTConverter ... converters )
     {
@@ -24,21 +22,15 @@ public class LUTConverterSetup implements ConverterSetup
     public LUTConverterSetup(final List< RealLUTConverter > converters  )
     {
         this.converters = converters;
-        //this.viewer = null;
-        //AbstractLinearRange alr;
     }
-
 
     @Override
     public void setDisplayRange( final double min, final double max )
     {
-
         for ( final RealLUTConverter converter : converters ) {
             converter.setMin(min);
             converter.setMax(max);
         }
-        //if ( viewer != null )
-        //    viewer.requestRepaint();
     }
 
     @Override
@@ -52,16 +44,6 @@ public class LUTConverterSetup implements ConverterSetup
     {
         return false;
     }
-    /*
-    @Override
-    public Listeners<SetupChangeListener> setupChangeListeners() {
-        return null;
-    }
-
-     */
-
-
-    private final Listeners.List< SetupChangeListener > listeners = new Listeners.SynchronizedList<>();
 
     @Override
     public Listeners<SetupChangeListener> setupChangeListeners() {
@@ -92,9 +74,4 @@ public class LUTConverterSetup implements ConverterSetup
         return null;
     }
 
-    /*@Override
-    public void setViewer( final RequestRepaint viewer )
-    {
-        this.viewer = viewer;
-    }*/
 }

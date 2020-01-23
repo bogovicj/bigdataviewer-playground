@@ -9,10 +9,7 @@ import bdv.viewer.*;
 import ij.IJ;
 import ij.ImagePlus;
 import net.imglib2.RandomAccessibleInterval;
-import net.imglib2.img.array.ArrayImg;
-import net.imglib2.img.array.ArrayImgs;
 import net.imglib2.img.display.imagej.ImageJFunctions;
-import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.util.Util;
 import net.imglib2.view.Views;
 import sc.fiji.bdvpg.sourceandconverter.SourceAndConverterUtils;
@@ -22,27 +19,35 @@ import java.util.function.Supplier;
 
 public class BdvCreator implements Runnable, Supplier<BigDataViewer>
 {
-	//private BdvOptions bdvOptions;
+	private ViewerOptions bdvOptions;
 	private boolean interpolate;
 	private BigDataViewer bdvHandle;
 
-	/*
-	public BdvCreator( )
+	public BdvCreator( ViewerOptions bdvOptions, boolean interpolate  )
 	{
-		this.bdvOptions = BdvOptions.options();
-		this.interpolate = false;
+		this.bdvOptions = bdvOptions;
+		this.interpolate = interpolate;
 	}
 
-	public BdvCreator( BdvOptions bdvOptions  )
+	public BdvCreator( ViewerOptions bdvOptions  )
 	{
 		this.bdvOptions = bdvOptions;
 		this.interpolate = false;
-	}*/
+	}
 
 	public BdvCreator(  boolean interpolate )
 	{
+		this.bdvOptions = ViewerOptions.options();
 		this.interpolate = interpolate;
 	}
+
+	public BdvCreator( )
+	{
+		this.bdvOptions = ViewerOptions.options();
+		this.interpolate = false;
+	}
+
+
 
 	@Override
 	public void run()
@@ -80,16 +85,24 @@ public class BdvCreator implements Runnable, Supplier<BigDataViewer>
 		sacList.add(sac);
 
 		ArrayList<ConverterSetup> csList = new ArrayList<>();
-		ConverterSetup cs = SourceAndConverterUtils.createConverterSetup(sac);//, () -> {});
+		//ConverterSetup cs = SourceAndConverterUtils.createConverterSetup(sac);//, () -> {});
+		//csList.add(cs);
+
+		final ConverterSetup cs = BigDataViewer.createConverterSetup( sac, 0 ); // Why is setupid necessary ?
 		csList.add(cs);
 
-		bdvHandle = BigDataViewer.open(csList,sacList,1,new CacheControl.Dummy(),"Title",new ProgressWriterConsole(), ViewerOptions.options());
+		bdvHandle = BigDataViewer.open(csList,sacList,1,new CacheControl.Dummy(),"Title",new ProgressWriterConsole(), bdvOptions);
 
-		bdvHandle.getConverterSetups().put(sac,cs);
+		bdvHandle.getViewer().state().setDisplayMode(DisplayMode.FUSED);
 
-		cs.setupChangeListeners().add((converterSetup) -> bdvHandle.getViewer().requestRepaint());//bdvHandle.getViewer().requestRepaint());
-		//bdvHandle.getViewer().state().re
-		//bss.removeFromBdv();
+		if (interpolate) {
+			bdvHandle.getViewer().state().setInterpolation(Interpolation.NLINEAR);
+		}
+
+		// Let's get an empty BigDataViewer Window!
+		// BROKEN FOR THE MOMENT
+		// bdvHandle.getViewer().state().removeSource(sac);
+
 	}
 
 	public BigDataViewer get()
