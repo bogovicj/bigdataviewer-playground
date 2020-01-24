@@ -2,6 +2,7 @@ package sc.fiji.bdvpg.bdv.projector;
 
 import bdv.BigDataViewer;
 import bdv.viewer.Source;
+import bdv.viewer.SourceAndConverter;
 import bdv.viewer.render.AccumulateProjectorFactory;
 import bdv.viewer.render.VolatileProjector;
 import net.imglib2.RandomAccessible;
@@ -24,17 +25,17 @@ public class AccumulateMixedProjectorARGBFactory implements AccumulateProjectorF
 		this.bdvHandle = bdvHandle;
 	}
 
+
 	@Override
 	public VolatileProjector createAccumulateProjector(
 			ArrayList< VolatileProjector > sourceProjectors,
-			ArrayList< Source< ? > > sources,
+			ArrayList<SourceAndConverter< ? >> sources,
 			ArrayList< ? extends RandomAccessible< ? extends ARGBType > > sourceScreenImages,
 			RandomAccessibleInterval< ARGBType > targetScreenImage,
 			int numThreads,
 			ExecutorService executorService )
 	{
 		return new AccumulateMixedProjectorARGB(
-						bdvHandle,
 						sourceProjectors,
 						sources,
 						sourceScreenImages,
@@ -42,4 +43,5 @@ public class AccumulateMixedProjectorARGBFactory implements AccumulateProjectorF
 						numThreads,
 						executorService );
 	}
+
 }

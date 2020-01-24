@@ -25,9 +25,8 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 	private final String[] projectionModes;
 
 	public AccumulateMixedProjectorARGB(
-			BigDataViewer bdvHandle,
 			final ArrayList< VolatileProjector > sourceProjectors,
-			final ArrayList< Source< ? > > sources,
+			final ArrayList< SourceAndConverter< ? > > sources,
 			final ArrayList< ? extends RandomAccessible< ? extends ARGBType > > sourceScreenImages,
 			final RandomAccessibleInterval< ARGBType > target,
 			final int numThreads,
@@ -103,7 +102,7 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 
 	}
 
-	private String[] getProjectionModes(BigDataViewer bdvHandle, ArrayList< Source< ? > > sources )
+	private String[] getProjectionModes(BigDataViewer bdvHandle, ArrayList< SourceAndConverter< ? > > sources )
 	{
 		// We need to reconstitute the sequence of action that lead to the current indexes
 

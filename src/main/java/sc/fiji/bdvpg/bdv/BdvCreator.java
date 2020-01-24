@@ -47,8 +47,6 @@ public class BdvCreator implements Runnable, Supplier<BigDataViewer>
 		this.interpolate = false;
 	}
 
-
-
 	@Override
 	public void run()
 	{

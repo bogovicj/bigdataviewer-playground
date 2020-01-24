@@ -1,6 +1,7 @@
 package sc.fiji.bdvpg.scijava.command.bdv;
 
 import bdv.*;
+import bdv.viewer.ViewerOptions;
 import bdv.viewer.render.AccumulateProjectorFactory;
 import net.imglib2.type.numeric.ARGBType;
 import org.scijava.ItemIO;
@@ -38,7 +39,7 @@ public class BdvWindowCreatorCommand implements Command {
     @Override
     public void run() {
         //------------ BdvHandleFrame
-        //BdvOptions opts = BdvOptions.options().frameTitle(windowTitle);
+        ViewerOptions opts = ViewerOptions.options();//.frameTitle(windowTitle);
         //if (is2D) opts = opts.is2D();
 
         // Create accumulate projector factory
@@ -46,18 +47,18 @@ public class BdvWindowCreatorCommand implements Command {
         switch (projector) {
             case Projection.MIXED_PROJECTOR:
                 factory = new AccumulateMixedProjectorARGBFactory(  );
-                //opts = opts.accumulateProjectorFactory(factory);
+                opts = opts.accumulateProjectorFactory(factory);
             case Projection.SUM_PROJECTOR:
                 // Default projector
                 break;
             case Projection.AVERAGE_PROJECTOR:
                 factory = AccumulateAverageProjectorARGB.factory;
-                //opts = opts.accumulateProjectorFactory(factory);
+                opts = opts.accumulateProjectorFactory(factory);
                 break;
             default:
         }
 
-        BdvCreator creator = new BdvCreator(true); //opts, interpolate);
+        BdvCreator creator = new BdvCreator(opts, interpolate);
         creator.run();
         bdvh = creator.get();
 
