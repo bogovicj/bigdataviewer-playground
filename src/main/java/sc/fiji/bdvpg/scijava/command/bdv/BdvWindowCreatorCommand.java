@@ -61,16 +61,5 @@ public class BdvWindowCreatorCommand implements Command {
         BdvCreator creator = new BdvCreator(opts, interpolate);
         creator.run();
         bdvh = creator.get();
-
-        // Now we can add the bdvHandle to the projector factory
-        switch (projector) {
-            case Projection.MIXED_PROJECTOR:
-                ((AccumulateMixedProjectorARGBFactory) factory).setBdvHandle( bdvh );
-            case Projection.SUM_PROJECTOR:
-                break;
-            case Projection.AVERAGE_PROJECTOR:
-                break;
-            default:
-        }
     }
 }

@@ -1,7 +1,5 @@
 package sc.fiji.bdvpg.bdv.projector;
 
-import bdv.BigDataViewer;
-import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
 import bdv.viewer.render.AccumulateProjectorFactory;
 import bdv.viewer.render.VolatileProjector;
@@ -14,34 +12,26 @@ import java.util.concurrent.ExecutorService;
 
 public class AccumulateMixedProjectorARGBFactory implements AccumulateProjectorFactory< ARGBType >
 {
-	private BigDataViewer bdvHandle;
 
 	public AccumulateMixedProjectorARGBFactory()
 	{
 	}
 
-	public void setBdvHandle( BigDataViewer bdvHandle )
-	{
-		this.bdvHandle = bdvHandle;
-	}
-
-
-	@Override
-	public VolatileProjector createAccumulateProjector(
-			ArrayList< VolatileProjector > sourceProjectors,
-			ArrayList<SourceAndConverter< ? >> sources,
-			ArrayList< ? extends RandomAccessible< ? extends ARGBType > > sourceScreenImages,
-			RandomAccessibleInterval< ARGBType > targetScreenImage,
-			int numThreads,
-			ExecutorService executorService )
+	public  VolatileProjector createProjector(
+			final ArrayList< VolatileProjector > sourceProjectors,
+			final ArrayList< SourceAndConverter< ? > > sources,
+			final ArrayList< ? extends RandomAccessible< ? extends ARGBType > > sourceScreenImages,
+			final RandomAccessibleInterval< ARGBType > targetScreenImage,
+			final int numThreads,
+			final ExecutorService executorService )
 	{
 		return new AccumulateMixedProjectorARGB(
-						sourceProjectors,
-						sources,
-						sourceScreenImages,
-						targetScreenImage,
-						numThreads,
-						executorService );
+				sourceProjectors,
+				sources,
+				sourceScreenImages,
+				targetScreenImage,
+				numThreads,
+				executorService );
 	}
 
 }

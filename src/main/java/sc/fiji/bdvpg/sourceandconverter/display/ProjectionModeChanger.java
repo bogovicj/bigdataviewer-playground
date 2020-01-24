@@ -24,7 +24,6 @@ public class ProjectionModeChanger implements Runnable, Consumer< SourceAndConve
 
     @Override
     public void accept(SourceAndConverter[] sourceAndConverter) {
-
         changeProjectionMode();
         updateDisplays();
     }
