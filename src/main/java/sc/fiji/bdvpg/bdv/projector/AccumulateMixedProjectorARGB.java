@@ -47,14 +47,27 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 		sourceOrder = new int[sacs.length];
 
 		for (int i=0;i<sacs.length;i++) {
-			projectionModes[i] = (int)
-					SourceAndConverterServices
-							.getSourceAndConverterService()
-							.getMetadata(sacs[i], PROJECTION_MODE);
-			projectionLayerIndex[i] = (int)
-					SourceAndConverterServices
-							.getSourceAndConverterService()
-							.getMetadata(sacs[i], PROJECTION_LAYER);
+			if (SourceAndConverterServices
+					.getSourceAndConverterService()
+					.getMetadata(sacs[i], PROJECTION_MODE)!=null) {
+
+				projectionModes[i] = (int)
+						SourceAndConverterServices
+								.getSourceAndConverterService()
+								.getMetadata(sacs[i], PROJECTION_MODE);
+			} else {
+				projectionModes[i] = PROJECTION_MODE_SUM;
+			}
+			if (SourceAndConverterServices
+					.getSourceAndConverterService()
+					.getMetadata(sacs[i], PROJECTION_LAYER)!=null) {
+				projectionLayerIndex[i] = (int)
+						SourceAndConverterServices
+								.getSourceAndConverterService()
+								.getMetadata(sacs[i], PROJECTION_LAYER);
+			} else {
+				projectionLayerIndex[i] = 0;
+			}
 		}
 
 		setSourceComputation();
@@ -66,7 +79,11 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 		/*boolean containsExclusiveProjectionMode = false;
 		for ( int projectionMode : projectionModes )
 		{
+<<<<<<< HEAD
 			if ( projectionMode.contains( Projection.PROJECTION_BELONGS_TO_OCCLUDING_LAYER) )
+=======
+			if ( projectionMode.contains( Projection.PROJECTION_MODE_OCCLUDING ) )
+>>>>>>> master
 			{
 				containsExclusiveProjectionMode = true;
 				break;
@@ -82,12 +99,20 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 
 			// first the exclusive ones
 			for ( int i = 0; i < numSources; i++ )
+<<<<<<< HEAD
 				if ( projectionModes[ i ].contains( Projection.PROJECTION_BELONGS_TO_OCCLUDING_LAYER) )
+=======
+				if ( projectionModes[ i ].contains( Projection.PROJECTION_MODE_OCCLUDING ) )
+>>>>>>> master
 					sourceOrder[ j++ ] = i;
 
 			// then the others
 			for ( int i = 0; i < numSources; i++ )
+<<<<<<< HEAD
 				if ( ! projectionModes[ i ].contains( Projection.PROJECTION_BELONGS_TO_OCCLUDING_LAYER) )
+=======
+				if ( ! projectionModes[ i ].contains( Projection.PROJECTION_MODE_OCCLUDING ) )
+>>>>>>> master
 					sourceOrder[ j++ ] = i;
 		}
 		else*/
@@ -118,6 +143,7 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 			if ( a == 0 ) continue;
 
 			final boolean isExclusive = false;//projectionModes[ sourceIndex ].contains(PROJECTION_BELONGS_TO_OCCLUDING_LAYER);
+
 
 			if ( a != 0 && isExclusive ) skipNonExclusiveSources = true;
 

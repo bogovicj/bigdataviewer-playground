@@ -30,6 +30,7 @@ public class Projection
 	public static final int PROJECTION_MODE_AVG = 1;
 	public static final String PROJECTION_LAYER = "Layer Number";
 
+
 	public static final String MIXED_PROJECTOR = "Mixed Projector";
 	public static final String SUM_PROJECTOR = "Sum Projector";
 	public static final String AVERAGE_PROJECTOR = "Average Projector";
