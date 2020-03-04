@@ -17,18 +17,25 @@ import static sc.fiji.bdvpg.bdv.projector.Projection.PROJECTION_MODE_SUM;
 @Plugin(type = Command.class, menuPath = ScijavaBdvDefaults.RootMenu+"Sources>Display>Set Sources Projection Mode")
 public class SourceAndConverterProjectionModeChangerCommand implements Command {
 
-    @Parameter ( label = "Projection Mode", choices = { PROJECTION_MODE_SUM, PROJECTION_MODE_AVG })
-    String projectionMode = PROJECTION_MODE_SUM;
+    @Parameter ( label = "Projection Mode", choices = { "SUM", "AVERAGE" })
+    String projectionMode = "SUM";
 
     @Parameter
     SourceAndConverter[] sacs;
 
     @Parameter
-    boolean showSourcesExclusively = false;
+    int layerIndex = 0;
 
     @Override
     public void run() {
-        new ProjectionModeChanger( sacs, projectionMode, showSourcesExclusively ).run();
+        switch (projectionMode) {
+            case "SUM":
+                new ProjectionModeChanger( sacs, PROJECTION_MODE_SUM, layerIndex ).run();
+                break;
+            case "AVERAGE":
+                new ProjectionModeChanger( sacs, PROJECTION_MODE_AVG, layerIndex ).run();
+                break;
+        }
     }
 
 }

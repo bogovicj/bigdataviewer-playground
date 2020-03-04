@@ -6,18 +6,19 @@ import sc.fiji.bdvpg.services.SourceAndConverterServices;
 
 import java.util.function.Consumer;
 
+import static sc.fiji.bdvpg.bdv.projector.Projection.PROJECTION_LAYER;
 import static sc.fiji.bdvpg.bdv.projector.Projection.PROJECTION_MODE;
 
 public class ProjectionModeChanger implements Runnable, Consumer< SourceAndConverter[] > {
 
-    private String projectionMode;
-    private final boolean showSourcesExclusively;
+    private int projectionMode;
+    private int layerIndex;
     private SourceAndConverter[] sacs;
 
-    public ProjectionModeChanger( SourceAndConverter[] sacs, String projectionMode, boolean showSourcesExclusively ) {
+    public ProjectionModeChanger( SourceAndConverter[] sacs, int projectionMode, int layerIndex ) {
         this.sacs = sacs;
         this.projectionMode = projectionMode;
-        this.showSourcesExclusively = showSourcesExclusively;
+        this.layerIndex = layerIndex;
     }
 
     @Override
@@ -43,10 +44,8 @@ public class ProjectionModeChanger implements Runnable, Consumer< SourceAndConve
     {
         for ( SourceAndConverter sac : sacs )
         {
-            if ( showSourcesExclusively )
-                projectionMode += Projection.PROJECTION_MODE_EXCLUSIVE;
-
             SourceAndConverterServices.getSourceAndConverterService().setMetadata( sac, PROJECTION_MODE, projectionMode );
+            SourceAndConverterServices.getSourceAndConverterService().setMetadata( sac, PROJECTION_LAYER, layerIndex );
         }
     }
 }

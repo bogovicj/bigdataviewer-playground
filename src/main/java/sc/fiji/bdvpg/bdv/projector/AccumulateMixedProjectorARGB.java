@@ -9,10 +9,10 @@ import net.imglib2.Cursor;
 import net.imglib2.RandomAccessible;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.type.numeric.ARGBType;
+import sc.fiji.bdvpg.scijava.services.SourceAndConverterService;
 import sc.fiji.bdvpg.services.SourceAndConverterServices;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -21,8 +21,10 @@ import static sc.fiji.bdvpg.bdv.projector.Projection.*;
 
 public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType, ARGBType >
 {
-	private final String[] projectionModes;
+	private final int[] projectionModes;
+	private final int[] projectionLayerIndex;
 	private int[] sourceOrder;
+	SourceAndConverter[] sacs;
 
 	public AccumulateMixedProjectorARGB(
 			BdvHandle bdvHandle,
@@ -34,16 +36,37 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 			final ExecutorService executorService )
 	{
 		super( sourceProjectors, sourceScreenImages, target, numThreads, executorService );
-		this.projectionModes = getProjectionModes( bdvHandle, sources );
-		setSourceOrderAccordingToExclusiveness();
+		//this.projectionModes = getProjectionModes( bdvHandle, sources );
+		//this.projectionLayer = getProjectionLayer( bdvHandle, sources );
+		//setSourceOrderAccordingToExclusiveness();
+
+		sacs = getSourceAndConverters(bdvHandle, sources);
+
+		projectionModes = new int[sacs.length];
+		projectionLayerIndex = new int[sacs.length];
+		sourceOrder = new int[sacs.length];
+
+		for (int i=0;i<sacs.length;i++) {
+			projectionModes[i] = (int)
+					SourceAndConverterServices
+							.getSourceAndConverterService()
+							.getMetadata(sacs[i], PROJECTION_MODE);
+			projectionLayerIndex[i] = (int)
+					SourceAndConverterServices
+							.getSourceAndConverterService()
+							.getMetadata(sacs[i], PROJECTION_LAYER);
+		}
+
+		setSourceComputation();
+
 	}
 
-	public void setSourceOrderAccordingToExclusiveness()
+	public void setSourceComputation()
 	{
-		boolean containsExclusiveProjectionMode = false;
-		for ( String projectionMode : projectionModes )
+		/*boolean containsExclusiveProjectionMode = false;
+		for ( int projectionMode : projectionModes )
 		{
-			if ( projectionMode.contains( Projection.PROJECTION_MODE_EXCLUSIVE ) )
+			if ( projectionMode.contains( Projection.PROJECTION_BELONGS_TO_OCCLUDING_LAYER) )
 			{
 				containsExclusiveProjectionMode = true;
 				break;
@@ -59,17 +82,17 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 
 			// first the exclusive ones
 			for ( int i = 0; i < numSources; i++ )
-				if ( projectionModes[ i ].contains( Projection.PROJECTION_MODE_EXCLUSIVE ) )
+				if ( projectionModes[ i ].contains( Projection.PROJECTION_BELONGS_TO_OCCLUDING_LAYER) )
 					sourceOrder[ j++ ] = i;
 
 			// then the others
 			for ( int i = 0; i < numSources; i++ )
-				if ( ! projectionModes[ i ].contains( Projection.PROJECTION_MODE_EXCLUSIVE ) )
+				if ( ! projectionModes[ i ].contains( Projection.PROJECTION_BELONGS_TO_OCCLUDING_LAYER) )
 					sourceOrder[ j++ ] = i;
 		}
-		else
+		else*/
 		{
-			for ( int i = 0; i < numSources; i++ )
+			for ( int i = 0; i < sacs.length; i++ )
 				sourceOrder[ i ] = i;
 		}
 	}
@@ -94,20 +117,20 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 
 			if ( a == 0 ) continue;
 
-			final boolean isExclusive = projectionModes[ sourceIndex ].contains( PROJECTION_MODE_EXCLUSIVE );
+			final boolean isExclusive = false;//projectionModes[ sourceIndex ].contains(PROJECTION_BELONGS_TO_OCCLUDING_LAYER);
 
 			if ( a != 0 && isExclusive ) skipNonExclusiveSources = true;
 
 			if ( skipNonExclusiveSources && ! isExclusive ) continue;
 
-			if ( projectionModes[ sourceIndex ].contains( Projection.PROJECTION_MODE_SUM ) )
+			if ( true ) //projectionModes[ sourceIndex ].contains( Projection.PROJECTION_MODE_SUM ) )
 			{
 				aAccu += a;
 				rAccu += r;
 				gAccu += g;
 				bAccu += b;
 			}
-			else if ( projectionModes[ sourceIndex ].contains( Projection.PROJECTION_MODE_AVG ) )
+			else if ( false ) //projectionModes[ sourceIndex ].contains( Projection.PROJECTION_MODE_AVG ) )
 			{
 				aAvg += a;
 				rAvg += r;
@@ -143,7 +166,7 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 		target.set( ARGBType.rgba( rAccu, gAccu, bAccu, aAccu ) );
 	}
 
-	private String[] getProjectionModes( BdvHandle bdvHandle, ArrayList< Source< ? > > sources )
+	private SourceAndConverter[] getSourceAndConverters( BdvHandle bdvHandle, ArrayList< Source< ? > > sources )
 	{
 		// We need to reconstitute the sequence of action that lead to the current indexes
 
@@ -163,7 +186,9 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 			sacArray[idx] = sacsInBdvHandle.get(visibleIndexes.get(idx));
 		}
 
-		final List< SourceAndConverter > sacs = Arrays.asList(sacArray);//SourceAndConverterServices.getSourceAndConverterService().getSourceAndConverters();
+		return sacArray;
+
+		/*final List< SourceAndConverter > sacs = Arrays.asList(sacArray);//SourceAndConverterServices.getSourceAndConverterService().getSourceAndConverters();
 		final String[] projectionModes = new String[ sources.size() ];
 
 		int sourceIndex = 0;
@@ -181,7 +206,7 @@ public class AccumulateMixedProjectorARGB extends AccumulateProjector< ARGBType,
 
 		}
 
-		return projectionModes;
+		return projectionModes;*/
 	}
 
 }
