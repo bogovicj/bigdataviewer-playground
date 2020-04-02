@@ -37,4 +37,6 @@ public class BigWarpViewTransform implements ViewTransformGeneric {
     public AffineGet asAffine3D() {
         return new AffineTransform3D();
     }
+
+    AbstractSpimSource
 }
